@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.akquinet.android.roboject</groupId>
+        <artifactId>roboject-project</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>de.akquinet.android.roboject</groupId>
+    <artifactId>roboject</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1-SNAPSHOT</version>
+
+    <name>roboject</name>
+    <description>-</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>ats.releases</id>
+            <name>ATS Maven Repository</name>
+            <url>http://nexus.spree.de:8081/nexus/content/repositories/releases</url>
+            <uniqueVersion>false</uniqueVersion>
+        </repository>
+
+        <snapshotRepository>
+            <id>ats.snapshots</id>
+            <name>ATS Snapshot Repository</name>
+            <url>http://nexus.spree.de:8081/nexus/content/repositories/snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
+<!--
+    <scm>
+        <connection>scm:svn:https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</connection>
+        <developerConnection>scm:svn:https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</developerConnection>
+        <url>https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</url>
+    </scm>
+-->
+
+</project>
