@@ -6,13 +6,13 @@
     <parent>
         <groupId>de.akquinet.android.roboject</groupId>
         <artifactId>roboject-project</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>de.akquinet.android.roboject</groupId>
     <artifactId>roboject</artifactId>
     <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <name>roboject</name>
     <description>-</description>
@@ -52,12 +52,9 @@
         </snapshotRepository>
     </distributionManagement>
 
-<!--
-    <scm>
-        <connection>scm:svn:https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</connection>
-        <developerConnection>scm:svn:https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</developerConnection>
-        <url>https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</url>
-    </scm>
--->
+    <!-- <scm> <connection>scm:svn:https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</connection> 
+        <developerConnection>scm:svn:https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</developerConnection> 
+        <url>https://www.spree.de/svn-repository/go-mobile/android/roboject/trunk/roboject</url> 
+        </scm> -->
 
 </project>

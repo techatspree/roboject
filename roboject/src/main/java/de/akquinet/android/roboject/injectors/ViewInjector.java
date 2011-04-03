@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
@@ -130,19 +131,15 @@ public class ViewInjector implements Injector
         }
         try {
             View view = activity.findViewById(value);
-            if (view == null) {
-                throw new RuntimeException("Could not inject a suitable view"
-                        + " for field " + field.getName() + "of instance of type "
-                        + field.getDeclaringClass().getCanonicalName() + "."
-                        + " No such view could be found.");
-            }
+            Log.i(getClass().getName(),
+                    "Injecting value '" + view + "' for field '" + field.getName() + "'...");
             field.setAccessible(true);
             field.set(activity, view);
         }
         catch (Exception e) {
             throw new RuntimeException("Could not inject a suitable view"
-                    + " for field " + field.getName() + "of instance of type "
-                    + field.getDeclaringClass().getCanonicalName(), e);
+                    + " for field " + field.getName() + " of type "
+                    + field.getType(), e);
         }
     }
 }
