@@ -140,7 +140,7 @@ public class IntentExtraInjector implements Injector
             if (String.class.isAssignableFrom(type)) {
                 extra = intent.getStringExtra(value);
             }
-            if (ArrayList.class.isAssignableFrom(type)) {
+            else if (ArrayList.class.isAssignableFrom(type)) {
                 extra = intent.getStringArrayListExtra(value);
                 if (extra == null) {
                     extra = intent.getParcelableArrayListExtra(value);
