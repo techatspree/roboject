@@ -130,12 +130,12 @@
             <id>it</id>
             <modules>
                 <module>roboject-it</module>
-            </modules>            
+            </modules>
         </profile>
         <profile>
             <!-- When enabled, this profile override the Sonatype distribution 
                 management -->
-            <id>ats.nexus</id>
+            <id>override.deploy.target</id>
             <distributionManagement>
                 <repository>
                     <id>${repo.releases.id}</id>
