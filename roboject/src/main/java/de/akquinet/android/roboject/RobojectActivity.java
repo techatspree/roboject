@@ -1,10 +1,14 @@
 package de.akquinet.android.roboject;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 
 
-public class RobojectActivity extends Activity implements RobojectLifecycle
+public class RobojectActivity extends Activity
+        implements RobojectLifecycle, ServiceConnection
 {
     private Container container;
 
@@ -22,13 +26,20 @@ public class RobojectActivity extends Activity implements RobojectLifecycle
         catch (RobojectException e) {
             throw new RuntimeException(e);
         }
+
+        this.container.invokeCreatePhase();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         this.container.invokeResumePhase();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.container.invokeStopPhase();
     }
 
     @Override
@@ -37,5 +48,13 @@ public class RobojectActivity extends Activity implements RobojectLifecycle
 
     @Override
     public void onReady() {
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder serviceObject) {
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
     }
 }

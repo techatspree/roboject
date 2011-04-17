@@ -50,6 +50,12 @@ public interface Injector
      */
     void start(Context context, Container container, Object managed);
 
+    void onCreate();
+
+    void onResume();
+
+    void onStop();
+
     /**
      * Method called by the container when the container is disposed. This
      * method is

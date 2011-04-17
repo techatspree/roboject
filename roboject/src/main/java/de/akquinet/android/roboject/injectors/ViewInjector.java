@@ -150,4 +150,22 @@ public class ViewInjector implements Injector
     public InjectorState getState() {
         return this.state;
     }
+
+    @Override
+    public void onCreate() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void onStop() {
+        // TODO Auto-generated method stub
+        
+    }
 }

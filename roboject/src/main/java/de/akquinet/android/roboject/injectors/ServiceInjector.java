@@ -2,6 +2,7 @@ package de.akquinet.android.roboject.injectors;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,8 @@ public class ServiceInjector implements Injector
     private InjectorState state = InjectorState.CREATED;
 
     private Map<Field, Boolean> fieldInjections = new HashMap<Field, Boolean>();
-    private List<ServiceConnection> serviceConnections = new ArrayList<ServiceConnection>();
+    private List<ServiceConnection> serviceConnections =
+            Collections.synchronizedList(new ArrayList<ServiceConnection>());
 
     /**
      * Method called by the container to initialize the container.
@@ -84,10 +86,6 @@ public class ServiceInjector implements Injector
 
         for (Field field : fields) {
             fieldInjections.put(field, false);
-        }
-
-        for (Field field : fields) {
-            injectService(field);
         }
     }
 
@@ -199,6 +197,8 @@ public class ServiceInjector implements Injector
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
+                serviceConnections.remove(this);
+
                 try {
                     field.set(managed, null);
                 }
@@ -210,7 +210,8 @@ public class ServiceInjector implements Injector
             }
         };
         serviceConnections.add(serviceConnection);
-        context.bindService(intent, serviceConnection, Service.BIND_AUTO_CREATE);
+        context.getApplicationContext().bindService(intent, serviceConnection,
+                Service.BIND_AUTO_CREATE);
     }
 
     private void invokeServicesConnectedLifeCycle() {
@@ -222,5 +223,39 @@ public class ServiceInjector implements Injector
     @Override
     public InjectorState getState() {
         return this.state;
+    }
+
+    @Override
+    public void onCreate() {
+    }
+
+    @Override
+    public void onResume() {
+        this.serviceConnections.clear();
+
+        for (Field field : fieldInjections.keySet()) {
+            injectService(field);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        Context appContext = context.getApplicationContext();
+        for (ServiceConnection connection : serviceConnections) {
+            unbindSafely(appContext, connection);
+        }
+        serviceConnections.clear();
+    }
+
+    private void unbindSafely(Context appContext, ServiceConnection connection) {
+        try {
+            appContext.unbindService(connection);
+        }
+        catch (Exception e) {
+            // We were unable to unbind, e.g. because no such service binding
+            // exists. This should be very rare, but is possible, e.g. if the
+            // service was killed by Android in the meantime.
+            // We ignore this.
+        }
     }
 }
