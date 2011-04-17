@@ -21,6 +21,7 @@ import de.akquinet.android.roboject.util.ReflectionUtil;
 public class IntentExtraInjector implements Injector
 {
     private Activity activity;
+    private InjectorState state = InjectorState.CREATED;
 
     /**
      * Method called by the container to initialize the container.
@@ -68,6 +69,8 @@ public class IntentExtraInjector implements Injector
 
     @Override
     public void start(Context context, Container container, Object managed) {
+        this.state = InjectorState.STARTED;
+
         List<Field> fields = ReflectionUtil.getFields(activity.getClass());
         for (Field field : fields) {
             Annotation[] annotations = field.getAnnotations();
@@ -77,6 +80,8 @@ public class IntentExtraInjector implements Injector
                 }
             }
         }
+
+        this.state = InjectorState.READY;
     }
 
     /**
@@ -238,5 +243,10 @@ public class IntentExtraInjector implements Injector
                     + " for field " + field.getName() + "of instance of type "
                     + field.getDeclaringClass().getCanonicalName(), e);
         }
+    }
+
+    @Override
+    public InjectorState getState() {
+        return this.state;
     }
 }

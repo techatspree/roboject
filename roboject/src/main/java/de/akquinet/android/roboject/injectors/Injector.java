@@ -1,12 +1,17 @@
 package de.akquinet.android.roboject.injectors;
 
+import android.content.Context;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
-import android.content.Context;
 
 
 public interface Injector
 {
+    enum InjectorState
+    {
+        CREATED, STARTED, READY
+    }
+
     /**
      * Method called by the container to initialize the container.
      * 
@@ -76,5 +81,8 @@ public interface Injector
      * invalid.
      */
     void invalidate();
+
     // TODO Do we need the Android lifecycle callbacks ?
+
+    InjectorState getState();
 }

@@ -6,15 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import android.app.Service;
+import android.content.Intent;
 import android.content.ServiceConnection;
 
 
 /**
  * <p>
  * Connect to an Android service and inject its binder object to this field.
- * 
- * <p>
- * You must pass the class name of the Android service as annotation value.
  * 
  * <p>
  * The annotated field must be of the type that the targeted service returns in
@@ -24,10 +22,16 @@ import android.content.ServiceConnection;
  * @author Philipp Kumar
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = ElementType.FIELD)
-public @interface Inject {
-    /**
-     * The class name of the targeted service
-     */
-    Class<? extends Service> value();
+@Target(ElementType.FIELD)
+public @interface Inject
+{
+    String action() default Intent.ACTION_VIEW;
+
+    String className() default "";
+
+    boolean restrictToThisPackage() default false;
+
+    int flags() default 0;
+
+    String type() default "";
 }

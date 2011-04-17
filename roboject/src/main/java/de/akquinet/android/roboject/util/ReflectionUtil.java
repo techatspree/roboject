@@ -49,6 +49,22 @@ public class ReflectionUtil
         getFields(results, clazz);
         return results;
     }
+    
+    public static List<Field> getAnnotatedFields(Class<?> clazz, Class<?> annotationType) {
+        List<Field> allFields = getFields(clazz);
+        
+        List<Field> results = new ArrayList<Field>();
+        for (Field field : allFields) {
+            Annotation[] annotations = field.getAnnotations();
+            for (Annotation annotation : annotations) {
+                if (annotation.annotationType().isAssignableFrom(annotationType)) {
+                    results.add(field);
+                }
+            }
+        }
+        
+        return results;
+    }
 
     private static void getFields(List<Field> fields, Class<?> clazz) {
         if (isTopMostClass(clazz)) {

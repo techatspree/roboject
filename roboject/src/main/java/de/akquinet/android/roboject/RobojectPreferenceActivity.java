@@ -1,10 +1,10 @@
 package de.akquinet.android.roboject;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 
 
-public class RobojectActivity extends Activity implements RobojectLifecycle
+public class RobojectPreferenceActivity extends PreferenceActivity implements RobojectLifecycle
 {
     private Container container;
 

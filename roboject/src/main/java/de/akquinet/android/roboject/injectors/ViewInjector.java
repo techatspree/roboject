@@ -18,6 +18,7 @@ import de.akquinet.android.roboject.util.ReflectionUtil;
 public class ViewInjector implements Injector
 {
     private Activity activity;
+    private InjectorState state = InjectorState.CREATED;
 
     /**
      * Method called by the container to initialize the container.
@@ -65,6 +66,7 @@ public class ViewInjector implements Injector
 
     @Override
     public void start(Context context, Container container, Object managed) {
+        this.state = InjectorState.STARTED;
         List<Field> fields = ReflectionUtil.getFields(activity.getClass());
         for (Field field : fields) {
             Annotation[] annotations = field.getAnnotations();
@@ -74,6 +76,7 @@ public class ViewInjector implements Injector
                 }
             }
         }
+        this.state = InjectorState.READY;
     }
 
     /**
@@ -141,5 +144,10 @@ public class ViewInjector implements Injector
                     + " for field " + field.getName() + " of type "
                     + field.getType(), e);
         }
+    }
+
+    @Override
+    public InjectorState getState() {
+        return this.state;
     }
 }
