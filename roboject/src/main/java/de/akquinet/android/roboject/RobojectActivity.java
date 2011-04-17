@@ -20,11 +20,13 @@ public class RobojectActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            this.container = new Container(this, this, getClass());
-        }
-        catch (RobojectException e) {
-            throw new RuntimeException(e);
+        if (this.container == null) {
+            try {
+                this.container = new Container(this, this, getClass());
+            }
+            catch (RobojectException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         this.container.invokeCreatePhase();
@@ -37,8 +39,8 @@ public class RobojectActivity extends Activity
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         this.container.invokeStopPhase();
     }
 

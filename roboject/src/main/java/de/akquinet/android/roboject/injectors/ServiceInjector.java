@@ -198,6 +198,7 @@ public class ServiceInjector implements Injector
             @Override
             public void onServiceDisconnected(ComponentName name) {
                 serviceConnections.remove(this);
+                state = InjectorState.CREATED;
 
                 try {
                     field.set(managed, null);
@@ -232,6 +233,9 @@ public class ServiceInjector implements Injector
     @Override
     public void onResume() {
         this.serviceConnections.clear();
+        for (Field field : fieldInjections.keySet()) {
+            fieldInjections.put(field, false);
+        }
 
         for (Field field : fieldInjections.keySet()) {
             injectService(field);
@@ -240,6 +244,7 @@ public class ServiceInjector implements Injector
 
     @Override
     public void onStop() {
+        state = InjectorState.STARTED;
         Context appContext = context.getApplicationContext();
         for (ServiceConnection connection : serviceConnections) {
             unbindSafely(appContext, connection);

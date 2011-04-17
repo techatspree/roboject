@@ -18,11 +18,9 @@ public class Container
 
     private List<Injector> injectors;
 
-    private Context context;
     private Object managed;
 
     public Container(Context context, Object managed, Class<?> clazz) throws RobojectException {
-        this.context = context;
         this.managed = managed;
         this.currentPhase = LifeCyclePhase.CREATE;
         this.injectors = RobojectConfiguration.getDefaultInjectors(managed);
@@ -30,16 +28,6 @@ public class Container
         for (Injector injector : this.injectors) {
             injector.configure(context, this, managed, clazz);
         }
-    }
-
-    public void update() {
-        if (allInjectorsReady()) {
-            invokeReadyPhase();
-        }
-    }
-
-    protected void invokeCreatePhase() {
-        this.currentPhase = LifeCyclePhase.CREATE;
 
         for (Injector injector : this.injectors) {
             if (injector.isValid()) {
@@ -48,20 +36,26 @@ public class Container
         }
     }
 
+    public void update() {
+        if (this.currentPhase == LifeCyclePhase.READY) {
+            return;
+        }
+
+        if (allInjectorsReady()) {
+            invokeReadyPhase();
+        }
+    }
+
+    protected void invokeCreatePhase() {
+        this.currentPhase = LifeCyclePhase.CREATE;
+    }
+
     protected void invokeResumePhase() {
         this.currentPhase = LifeCyclePhase.RESUME;
 
         for (Injector injector : this.injectors) {
             injector.onResume();
         }
-
-        // check if we can go to ready phase
-        for (Injector injector : this.injectors) {
-            if (InjectorState.READY != injector.getState()) {
-                return;
-            }
-        }
-        invokeReadyPhase();
     }
 
     protected void invokeStopPhase() {
