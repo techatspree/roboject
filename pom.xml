@@ -121,9 +121,11 @@
         </plugins>
     </build>
 
-    <!-- <scm> <connection>scm:git:git@github.com:akquinet/androlog.git</connection> 
-        <url>git@github.com:akquinet/androlog.git</url> <developerConnection>scm:git:git@github.com:akquinet/androlog.git</developerConnection> 
-        </scm> -->
+    <scm>
+        <connection>scm:git:git@github.com:philippkumar/roboject.git</connection> 
+        <url>git@github.com:philippkumar/roboject.git</url>
+        <developerConnection>scm:git:git@github.com:philippkumar/roboject.git</developerConnection> 
+    </scm>
 
     <profiles>
         <profile>
