@@ -111,7 +111,7 @@
 
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.2-SNAPSHOT</version>
+                <version>2.1</version>
                 <configuration>
                     <tagBase>https://svn.spree.de/svn-repository/go-mobile/android/roboject/tags</tagBase>
                     <useReleaseProfile>true</useReleaseProfile>
