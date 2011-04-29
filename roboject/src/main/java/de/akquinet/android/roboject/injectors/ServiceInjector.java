@@ -78,12 +78,6 @@ public class ServiceInjector implements Injector
         this.state = InjectorState.STARTED;
         List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), Inject.class);
 
-        if (fields.isEmpty()) {
-            // Nothing to inject. This means all services (zero) are bound.
-            invokeServicesConnectedLifeCycle();
-            return;
-        }
-
         for (Field field : fields) {
             fieldInjections.put(field, false);
         }
@@ -233,6 +227,13 @@ public class ServiceInjector implements Injector
     @Override
     public void onResume() {
         this.serviceConnections.clear();
+
+        if (fieldInjections.isEmpty()) {
+            // Nothing to inject. Proceed with onServicesConnected.
+            invokeServicesConnectedLifeCycle();
+            return;
+        }
+
         for (Field field : fieldInjections.keySet()) {
             fieldInjections.put(field, false);
         }
@@ -258,7 +259,7 @@ public class ServiceInjector implements Injector
         }
         catch (Exception e) {
             // We were unable to unbind, e.g. because no such service binding
-            // exists. This should be very rare, but is possible, e.g. if the
+            // exists. This should be rare, but is possible, e.g. if the
             // service was killed by Android in the meantime.
             // We ignore this.
         }
