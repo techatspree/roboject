@@ -174,18 +174,7 @@ public class ServiceInjector implements Injector
                         }
                     }
 
-                    new AsyncTask<Void, Void, Void>() {
-                        @Override
-                        protected Void doInBackground(Void... arg0) {
-                            invokeServicesConnectedLifeCycle();
-                            return null;
-                        }
-
-                        protected void onPostExecute(Void result) {
-                            state = InjectorState.READY;
-                            container.update();
-                        };
-                    }.execute();
+                    done();
                 }
             }
 
@@ -220,6 +209,21 @@ public class ServiceInjector implements Injector
         return this.state;
     }
 
+    private void done() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... arg0) {
+                invokeServicesConnectedLifeCycle();
+                return null;
+            }
+
+            protected void onPostExecute(Void result) {
+                state = InjectorState.READY;
+                container.update();
+            };
+        }.execute();
+    }
+
     @Override
     public void onCreate() {
     }
@@ -229,8 +233,8 @@ public class ServiceInjector implements Injector
         this.serviceConnections.clear();
 
         if (fieldInjections.isEmpty()) {
-            // Nothing to inject. Proceed with onServicesConnected.
-            invokeServicesConnectedLifeCycle();
+            // Nothing to inject. Proceed.
+            done();
             return;
         }
 
