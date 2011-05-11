@@ -5,13 +5,13 @@
     <parent>
         <groupId>de.akquinet.android.roboject</groupId>
         <artifactId>roboject-project</artifactId>
-        <version>0.2.2</version>
+        <version>0.2.3-SNAPSHOT</version>
     </parent>
 
     <groupId>de.akquinet.android.roboject</groupId>
     <artifactId>roboject</artifactId>
     <packaging>jar</packaging>
-    <version>0.2.2</version>
+    <version>0.2.3-SNAPSHOT</version>
 
     <name>roboject</name>
     <description>-</description>
