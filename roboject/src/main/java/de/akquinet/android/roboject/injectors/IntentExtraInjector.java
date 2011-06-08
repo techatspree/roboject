@@ -151,31 +151,31 @@ public class IntentExtraInjector implements Injector
                     extra = intent.getParcelableArrayListExtra(value);
                 }
             }
-            else if (Boolean.class.isAssignableFrom(type)) {
+            else if (boolean.class.isAssignableFrom(type) || Boolean.class.isAssignableFrom(type)) {
                 extra = intent.getBooleanExtra(value, false);
             }
             else if (Bundle.class.isAssignableFrom(type)) {
                 extra = intent.getBundleExtra(value);
             }
-            else if (Byte.class.isAssignableFrom(type)) {
+            else if (byte.class.isAssignableFrom(type) || Byte.class.isAssignableFrom(type)) {
                 extra = intent.getByteExtra(value, (byte) 0);
             }
-            else if (Character.class.isAssignableFrom(type)) {
+            else if (char.class.isAssignableFrom(type) || Character.class.isAssignableFrom(type)) {
                 extra = intent.getCharExtra(value, (char) 0);
             }
             else if (CharSequence.class.isAssignableFrom(type)) {
                 extra = intent.getCharSequenceExtra(value);
             }
-            else if (Double.class.isAssignableFrom(type)) {
+            else if (double.class.isAssignableFrom(type) || Double.class.isAssignableFrom(type)) {
                 extra = intent.getDoubleExtra(value, 0d);
             }
-            else if (Float.class.isAssignableFrom(type)) {
+            else if (float.class.isAssignableFrom(type) || Float.class.isAssignableFrom(type)) {
                 extra = intent.getFloatExtra(value, 0f);
             }
-            else if (Integer.class.isAssignableFrom(type)) {
+            else if (int.class.isAssignableFrom(type) || Integer.class.isAssignableFrom(type)) {
                 extra = intent.getIntExtra(value, 0);
             }
-            else if (Long.class.isAssignableFrom(type)) {
+            else if (long.class.isAssignableFrom(type) || Long.class.isAssignableFrom(type)) {
                 extra = intent.getLongExtra(value, 0l);
             }
             else if (Parcelable.class.isAssignableFrom(type)) {
@@ -184,7 +184,7 @@ public class IntentExtraInjector implements Injector
             else if (Serializable.class.isAssignableFrom(type)) {
                 extra = intent.getSerializableExtra(value);
             }
-            else if (Short.class.isAssignableFrom(type)) {
+            else if (short.class.isAssignableFrom(type) || Short.class.isAssignableFrom(type)) {
                 extra = intent.getShortExtra(value, (short) 0);
             }
             else if (type.isArray()) {
@@ -192,31 +192,39 @@ public class IntentExtraInjector implements Injector
                 if (String.class.isAssignableFrom(componentType)) {
                     extra = intent.getStringArrayExtra(value);
                 }
-                else if (Boolean.class.isAssignableFrom(componentType)) {
-                    extra = intent.getBooleanArrayExtra(value);
-                }
-                else if (Byte.class.isAssignableFrom(componentType)) {
-                    extra = intent.getByteArrayExtra(value);
-                }
-                else if (Character.class.isAssignableFrom(componentType)) {
-                    extra = intent.getCharArrayExtra(value);
-                }
-                else if (Double.class.isAssignableFrom(componentType)) {
-                    extra = intent.getDoubleArrayExtra(value);
-                }
-                else if (Float.class.isAssignableFrom(componentType)) {
-                    extra = intent.getFloatArrayExtra(value);
-                }
-                else if (Integer.class.isAssignableFrom(componentType)) {
-                    extra = intent.getIntArrayExtra(value);
-                }
-                else if (Long.class.isAssignableFrom(componentType)) {
-                    extra = intent.getLongArrayExtra(value);
-                }
                 else if (Parcelable.class.isAssignableFrom(componentType)) {
                     extra = intent.getParcelableArrayExtra(value);
                 }
-                else if (Short.class.isAssignableFrom(componentType)) {
+                else if (boolean.class.isAssignableFrom(type)
+                        || Boolean.class.isAssignableFrom(componentType)) {
+                    extra = intent.getBooleanArrayExtra(value);
+                }
+                else if (byte.class.isAssignableFrom(type)
+                        || Byte.class.isAssignableFrom(componentType)) {
+                    extra = intent.getByteArrayExtra(value);
+                }
+                else if (char.class.isAssignableFrom(type)
+                        || Character.class.isAssignableFrom(componentType)) {
+                    extra = intent.getCharArrayExtra(value);
+                }
+                else if (double.class.isAssignableFrom(type)
+                        || Double.class.isAssignableFrom(componentType)) {
+                    extra = intent.getDoubleArrayExtra(value);
+                }
+                else if (float.class.isAssignableFrom(type)
+                        || Float.class.isAssignableFrom(componentType)) {
+                    extra = intent.getFloatArrayExtra(value);
+                }
+                else if (int.class.isAssignableFrom(type)
+                        || Integer.class.isAssignableFrom(componentType)) {
+                    extra = intent.getIntArrayExtra(value);
+                }
+                else if (long.class.isAssignableFrom(type)
+                        || Long.class.isAssignableFrom(componentType)) {
+                    extra = intent.getLongArrayExtra(value);
+                }
+                else if (short.class.isAssignableFrom(type)
+                        || Short.class.isAssignableFrom(componentType)) {
                     extra = intent.getShortArrayExtra(value);
                 }
             }
@@ -252,12 +260,12 @@ public class IntentExtraInjector implements Injector
 
     @Override
     public void onCreate() {
-        
+
     }
 
     @Override
     public void onResume() {
-        
+
     }
 
     @Override
