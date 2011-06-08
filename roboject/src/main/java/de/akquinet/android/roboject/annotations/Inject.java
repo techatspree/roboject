@@ -29,7 +29,12 @@ public @interface Inject
 
     String className() default "";
 
-    boolean restrictToThisPackage() default false;
+    /**
+     * If true, only services that are defined in the same app are injected (so
+     * the service is part of the same Android package). If false, exposed
+     * services from other apps can be injected. The default is false.
+     */
+    boolean restrictToThisPackage() default true;
 
     int flags() default 0;
 
