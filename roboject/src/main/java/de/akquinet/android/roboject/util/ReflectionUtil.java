@@ -1,3 +1,17 @@
+/*
+
+This file is part of Roboject
+
+Copyright (c) 2010-2011 akquinet A.G.
+
+Contact:  http://www.akquinet.de/en
+
+GNU General Public License Usage
+This file may be used under the terms of the GNU General Public License version 3.0 as published by the Free Software Foundation and appearing in the file LICENSE included in the packaging of this file.  Please review the following information to ensure the GNU General Public License version 3.0 requirements will be met: http://www.gnu.org/copyleft/gpl.html.
+
+If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
+
+*/
 package de.akquinet.android.roboject.util;
 
 import java.lang.annotation.Annotation;
@@ -11,7 +25,7 @@ import android.app.Service;
 
 /**
  * Utility class to do common reflection tasks.
- * 
+ *
  * @author Philipp Kumar
  */
 public class ReflectionUtil
@@ -20,7 +34,7 @@ public class ReflectionUtil
      * Checks the given class and all super classes for a certain class
      * annotation and returns the first one that matches. If no such annotation
      * is found, returns null.
-     * 
+     *
      * @param clazz
      *            the class to check for the annotation
      * @param annotationClass
@@ -49,10 +63,10 @@ public class ReflectionUtil
         getFields(results, clazz);
         return results;
     }
-    
+
     public static List<Field> getAnnotatedFields(Class<?> clazz, Class<?> annotationType) {
         List<Field> allFields = getFields(clazz);
-        
+
         List<Field> results = new ArrayList<Field>();
         for (Field field : allFields) {
             Annotation[] annotations = field.getAnnotations();
@@ -62,7 +76,7 @@ public class ReflectionUtil
                 }
             }
         }
-        
+
         return results;
     }
 
