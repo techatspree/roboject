@@ -18,13 +18,13 @@ If you are unsure which license is appropriate for your use, please contact the 
     <parent>
         <groupId>de.akquinet.android.roboject</groupId>
         <artifactId>roboject-project</artifactId>
-        <version>0.2.5-SNAPSHOT</version>
+        <version>0.2.6</version>
     </parent>
 
     <groupId>de.akquinet.android.roboject</groupId>
     <artifactId>roboject</artifactId>
     <packaging>jar</packaging>
-    <version>0.2.5-SNAPSHOT</version>
+    <version>0.2.6</version>
 
     <name>roboject</name>
     <description>-</description>

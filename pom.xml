@@ -16,7 +16,7 @@ If you are unsure which license is appropriate for your use, please contact the 
 
     <groupId>de.akquinet.android.roboject</groupId>
     <artifactId>roboject-project</artifactId>
-    <version>0.2.5-SNAPSHOT</version>
+    <version>0.2.6</version>
     <packaging>pom</packaging>
 
     <parent>
