@@ -15,11 +15,6 @@ import de.akquinet.android.roboject.util.AndroidUtil;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
 
-/* 
- * TODO: This injector makes sense in setContentView(..).
- * Doing it in onCreate() as done right now forces implementations
- * to call setContentView before super.onCreate(). 
- */
 public class ViewInjector implements Injector
 {
     private Activity activity;
