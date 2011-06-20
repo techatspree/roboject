@@ -5,12 +5,30 @@ import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 
 
 public class RobojectActivity extends Activity
         implements RobojectLifecycle, ServiceConnection
 {
     private Container container;
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        onSetContentView();
+    }
+
+    @Override
+    public void setContentView(View view, LayoutParams params) {
+        super.setContentView(view, params);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+    }
 
     /**
      * Contract for subclasses: You need to call super before relying on
@@ -59,4 +77,18 @@ public class RobojectActivity extends Activity
     @Override
     public void onServiceDisconnected(ComponentName name) {
     }
+
+    private void onSetContentView() {
+        if (this.container == null) {
+            try {
+                this.container = new Container(this, this, getClass());
+            }
+            catch (RobojectException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        this.container.invokeSetContentView();
+    }
+
 }

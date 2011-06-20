@@ -15,6 +15,11 @@ import de.akquinet.android.roboject.util.AndroidUtil;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
 
+/* 
+ * TODO: This injector makes sense in setContentView(..).
+ * Doing it in onCreate() as done right now forces implementations
+ * to call setContentView before super.onCreate(). 
+ */
 public class ViewInjector implements Injector
 {
     private Activity activity;
@@ -66,16 +71,6 @@ public class ViewInjector implements Injector
 
     @Override
     public void start(Context context, Container container, Object managed) {
-        this.state = InjectorState.STARTED;
-        List<Field> fields = ReflectionUtil.getFields(activity.getClass());
-        for (Field field : fields) {
-            Annotation[] annotations = field.getAnnotations();
-            for (Annotation annotation : annotations) {
-                if (annotation instanceof InjectView) {
-                    injectView(field, (InjectView) annotation);
-                }
-            }
-        }
         this.state = InjectorState.READY;
     }
 
@@ -152,20 +147,27 @@ public class ViewInjector implements Injector
     }
 
     @Override
+    public void onSetContentView() {
+        List<Field> fields = ReflectionUtil.getFields(activity.getClass());
+        for (Field field : fields) {
+            Annotation[] annotations = field.getAnnotations();
+            for (Annotation annotation : annotations) {
+                if (annotation instanceof InjectView) {
+                    injectView(field, (InjectView) annotation);
+                }
+            }
+        }
+    }
+
+    @Override
     public void onCreate() {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void onResume() {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void onStop() {
-        // TODO Auto-generated method stub
-        
     }
 }

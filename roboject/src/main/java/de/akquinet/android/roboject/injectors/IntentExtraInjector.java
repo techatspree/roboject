@@ -259,13 +259,15 @@ public class IntentExtraInjector implements Injector
     }
 
     @Override
-    public void onCreate() {
+    public void onSetContentView() {
+    }
 
+    @Override
+    public void onCreate() {
     }
 
     @Override
     public void onResume() {
-
     }
 
     @Override
