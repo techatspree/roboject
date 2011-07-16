@@ -147,7 +147,7 @@ public class ServiceInjector implements Injector
 
         String action = annotation.action();
         boolean restrictToThisPackage = annotation.restrictToThisPackage();
-        String className = annotation.className();
+        String className = annotation.clazz().getName();
         int flags = annotation.flags();
         String type = annotation.type();
 
@@ -158,7 +158,9 @@ public class ServiceInjector implements Injector
         if (restrictToThisPackage) {
             intent.setPackage(context.getPackageName());
         }
-        if (className != null && !"".equals(className.trim())) {
+        if (className != null
+                && !className.equals(Object.class.getName())
+                && !"".equals(className.trim())) {
             intent.setClassName(context, className);
         }
         if (type != null && !"".equals(type.trim())) {

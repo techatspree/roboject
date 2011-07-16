@@ -41,7 +41,7 @@ public @interface Inject
 {
     String action() default Intent.ACTION_VIEW;
 
-    String className() default "";
+    Class<?> clazz() default Object.class;
 
     /**
      * If true, only services that are defined in the same app are injected (so

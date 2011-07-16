@@ -22,6 +22,6 @@ import de.akquinet.android.robojecttest.services.TestService.AdderService;
 
 public class InjectServiceTestActivity extends RobojectActivity
 {
-    @Inject(TestService.class)
+    @Inject(clazz=TestService.class)
     public AdderService adderService;
 }

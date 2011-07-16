@@ -26,7 +26,7 @@ If you are unsure which license is appropriate for your use, please contact the 
         <dependency>
             <groupId>de.akquinet.android.roboject</groupId>
             <artifactId>roboject</artifactId>
-            <version>0.2.3-SNAPSHOT</version>
+            <version>0.2.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>de.akquinet.android.marvin</groupId>
