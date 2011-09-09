@@ -52,7 +52,7 @@ If you are unsure which license is appropriate for your use, please contact the 
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>maven-android-plugin</artifactId>
-                <version>3.0.0-SNAPSHOT</version>
+                <version>3.0.0-alpha-7</version>
                 <configuration>
                     <sdk>
                         <platform>4</platform>
@@ -62,30 +62,6 @@ If you are unsure which license is appropriate for your use, please contact the 
                     <extractDuplicates>true</extractDuplicates>
                 </configuration>
                 <extensions>true</extensions>
-            </plugin>
-            <!-- Copy the dependencies to target/dependencies -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                            <excludeTransitive>true</excludeTransitive>
-                            <includeScope>compile</includeScope>
-                            <excludeGroupIds>android,org.apache.httpcomponents,org.json</excludeGroupIds>
-                            <stripVersion>true</stripVersion>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
