@@ -12,27 +12,19 @@ This file may be used under the terms of the GNU General Public License version 
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
 
 */
-package de.akquinet.android.roboject;
+package de.akquinet.android.robojecttest.activities;
 
-import java.util.ArrayList;
-import java.util.List;
+import de.akquinet.android.roboject.RobojectActivity;
+import de.akquinet.android.roboject.annotations.InjectLayout;
+import de.akquinet.android.robojecttest.R;
 
-import android.app.Activity;
-import de.akquinet.android.roboject.injectors.*;
+@InjectLayout(R.layout.viewinject)
+public class InjectLayoutTestActivity extends RobojectActivity {
 
+    public boolean layoutInitialized = false;
 
-public class RobojectConfiguration
-{
-    public static List<Injector> getDefaultInjectors(Object managed) {
-        List<Injector> result = new ArrayList<Injector>();
-
-        if (managed instanceof Activity) {
-            result.add(new ViewInjector());
-            result.add(new ServiceInjector());
-            result.add(new IntentExtraInjector());
-            result.add(new LayoutInjector());
-        }
-
-        return result;
+    @Override
+    public void onContentChanged() {
+        layoutInitialized = true;
     }
 }

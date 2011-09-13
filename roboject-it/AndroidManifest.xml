@@ -11,6 +11,7 @@
 
         <service android:name=".services.TestService"></service>
         <activity android:name=".activities.InjectViewTestActivity"></activity>
+        <activity android:name=".activities.InjectLayoutTestActivity"></activity>
         <activity android:name=".activities.InjectServiceTestActivity"></activity>
     </application>
 

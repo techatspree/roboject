@@ -12,27 +12,21 @@ This file may be used under the terms of the GNU General Public License version 
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
 
 */
-package de.akquinet.android.roboject;
+package de.akquinet.android.robojecttest;
 
-import java.util.ArrayList;
-import java.util.List;
+import de.akquinet.android.marvin.ActivityTestCase;
+import de.akquinet.android.robojecttest.activities.InjectLayoutTestActivity;
 
-import android.app.Activity;
-import de.akquinet.android.roboject.injectors.*;
+import static org.hamcrest.CoreMatchers.is;
 
 
-public class RobojectConfiguration
+public class InjectLayoutTest extends ActivityTestCase<InjectLayoutTestActivity>
 {
-    public static List<Injector> getDefaultInjectors(Object managed) {
-        List<Injector> result = new ArrayList<Injector>();
+    public InjectLayoutTest() {
+        super(InjectLayoutTestActivity.class);
+    }
 
-        if (managed instanceof Activity) {
-            result.add(new ViewInjector());
-            result.add(new ServiceInjector());
-            result.add(new IntentExtraInjector());
-            result.add(new LayoutInjector());
-        }
-
-        return result;
+    public void testInjectLayout() {
+        assertThat(getActivity().layoutInitialized, is(true));
     }
 }

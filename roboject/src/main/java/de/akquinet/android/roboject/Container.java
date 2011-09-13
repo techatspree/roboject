@@ -68,6 +68,10 @@ public class Container
 
     protected void invokeCreatePhase() {
         this.currentPhase = LifeCyclePhase.CREATE;
+
+        for (Injector injector : this.injectors) {
+            injector.onCreate();
+        }
     }
 
     protected void invokeResumePhase() {
