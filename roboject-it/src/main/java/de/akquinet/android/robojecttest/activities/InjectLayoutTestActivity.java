@@ -21,10 +21,4 @@ import de.akquinet.android.robojecttest.R;
 @InjectLayout(R.layout.viewinject)
 public class InjectLayoutTestActivity extends RobojectActivity {
 
-    public boolean layoutInitialized = false;
-
-    @Override
-    public void onContentChanged() {
-        layoutInitialized = true;
-    }
 }

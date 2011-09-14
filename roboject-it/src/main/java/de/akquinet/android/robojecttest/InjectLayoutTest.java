@@ -14,10 +14,15 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.robojecttest;
 
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import de.akquinet.android.marvin.ActivityTestCase;
 import de.akquinet.android.robojecttest.activities.InjectLayoutTestActivity;
+import org.hamcrest.CoreMatchers;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 
 public class InjectLayoutTest extends ActivityTestCase<InjectLayoutTestActivity>
@@ -27,6 +32,7 @@ public class InjectLayoutTest extends ActivityTestCase<InjectLayoutTestActivity>
     }
 
     public void testInjectLayout() {
-        assertThat(getActivity().layoutInitialized, is(true));
+        ViewGroup view = (ViewGroup) getActivity().getWindow().getDecorView();
+        assertThat(view.getChildAt(0), is (instanceOf( LinearLayout.class)));
     }
 }
