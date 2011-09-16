@@ -15,7 +15,9 @@ If you are unsure which license is appropriate for your use, please contact the 
 package de.akquinet.android.roboject;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
