@@ -15,7 +15,6 @@ If you are unsure which license is appropriate for your use, please contact the 
 package de.akquinet.android.roboject.injectors;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectApplication;
@@ -30,7 +29,7 @@ import java.util.Map;
 public class ObjectInjector implements Injector {
 
     private Activity activity;
-    private RobojectApplication application;
+    private Map<String, Object> dataSet;
     private InjectorState state = InjectorState.CREATED;
 
     /**
@@ -53,8 +52,9 @@ public class ObjectInjector implements Injector {
         if (managed instanceof Activity) {
             this.activity = (Activity) context;
             if (this.activity.getApplication() instanceof RobojectApplication) {
-                this.application = (RobojectApplication) this.activity.getApplication();
-                return true;
+                RobojectApplication application = (RobojectApplication) this.activity.getApplication();
+                this.dataSet = (Map<String, Object>) application.getDataSet(this.activity.getClass());
+                return this.dataSet != null;
             }
         }
 
@@ -100,7 +100,7 @@ public class ObjectInjector implements Injector {
      */
     @Override
     public boolean isValid() {
-        return this.activity != null && this.application != null;
+        return this.activity != null && this.dataSet != null;
     }
 
     /**
@@ -136,7 +136,7 @@ public class ObjectInjector implements Injector {
             if (key == null || key == "")
                 key = field.getName();
 
-            Object value = application.retrieveData(key);
+            Object value = dataSet.get(key);
             if (value == null)
                 throw new RuntimeException("Error initializing field " + field.getName() + ". No matching value found.");
 

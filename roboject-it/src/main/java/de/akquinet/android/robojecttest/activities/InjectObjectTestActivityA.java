@@ -39,8 +39,8 @@ public class InjectObjectTestActivityA extends RobojectActivity
 
         Set<String> mySet = new HashSet<String>();
         mySet.add("Hello Android");
-        application.storeData("mySet", mySet);
-        application.storeData("mySet2", mySet);
+        application.storeData(InjectObjectTestActivityB.class, "mySet", mySet);
+        application.storeData(InjectObjectTestActivityB.class, "mySet2", mySet);
         startActivity(intent);
     }
 }
