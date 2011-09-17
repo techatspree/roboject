@@ -15,13 +15,9 @@ If you are unsure which license is appropriate for your use, please contact the 
 package de.akquinet.android.robojecttest;
 
 import android.app.Activity;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import de.akquinet.android.marvin.ActivityTestCase;
-import de.akquinet.android.robojecttest.activities.InjectLayoutTestActivity;
 import de.akquinet.android.robojecttest.activities.InjectObjectTestActivityA;
 import de.akquinet.android.robojecttest.activities.InjectObjectTestActivityB;
-import org.hamcrest.CoreMatchers;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
@@ -32,14 +28,20 @@ public class InjectObjectTest extends ActivityTestCase<InjectObjectTestActivityA
         super(InjectObjectTestActivityA.class);
     }
 
-    public void testInjectObjectLayoutWithFieldName() {
+    public void testInjectObjectLayoutWithFieldName() throws Exception {
+        getActivity().startSecondActivity();
+        Thread.sleep(2000);
         Activity activity = getMostRecentlyStartedActivity();
+
         assertThat(activity, instanceOf(InjectObjectTestActivityB.class));
         assertThat(((InjectObjectTestActivityB) activity).getMySet(), is(not(nullValue())));
     }
 
-    public void testInjectObjectLayoutWithValue() {
+    public void testInjectObjectLayoutWithValue() throws Exception {
+        getActivity().startSecondActivity();
+        Thread.sleep(2000);
         Activity activity = getMostRecentlyStartedActivity();
+
         assertThat(activity, instanceOf(InjectObjectTestActivityB.class));
         assertThat(((InjectObjectTestActivityB) activity).getMySet(), is(not(nullValue())));
     }

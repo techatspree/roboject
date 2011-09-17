@@ -16,7 +16,6 @@ package de.akquinet.android.robojecttest.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import de.akquinet.android.roboject.RobojectActivity;
 import de.akquinet.android.roboject.RobojectApplication;
 import de.akquinet.android.robojecttest.R;
@@ -25,13 +24,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class InjectObjectTestActivityA extends RobojectActivity
-{
+public class InjectObjectTestActivityA extends RobojectActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.viewinject);
         super.onCreate(savedInstanceState);
+    }
 
+    public void startSecondActivity() {
         RobojectApplication application = (RobojectApplication) getApplication();
 
         Intent intent = new Intent();

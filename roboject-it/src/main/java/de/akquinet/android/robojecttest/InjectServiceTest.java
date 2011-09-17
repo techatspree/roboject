@@ -14,13 +14,13 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.robojecttest;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
 import de.akquinet.android.marvin.ActivityTestCase;
 import de.akquinet.android.robojecttest.activities.InjectServiceTestActivity;
 
+import static org.hamcrest.CoreMatchers.*;
 
-public class InjectServiceTest extends ActivityTestCase<InjectServiceTestActivity>
-{
+
+public class InjectServiceTest extends ActivityTestCase<InjectServiceTestActivity> {
     public InjectServiceTest() {
         super(InjectServiceTestActivity.class);
     }
@@ -29,5 +29,6 @@ public class InjectServiceTest extends ActivityTestCase<InjectServiceTestActivit
         Thread.sleep(2000);
 
         assertThat(getActivity().adderService, notNullValue());
+        assertThat(getActivity().adderService.add(2, 3), is(equalTo(5)));
     }
 }
