@@ -11,7 +11,7 @@ This file may be used under the terms of the GNU General Public License version 
 
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
 
-*/
+ */
 package de.akquinet.android.roboject.annotations;
 
 import java.lang.annotation.ElementType;
@@ -27,17 +27,17 @@ import android.content.ServiceConnection;
 /**
  * <p>
  * Connect to an Android service and inject its binder object to this field.
- *
+ * 
  * <p>
  * The annotated field must be of the type that the targeted service returns in
  * its {@link Service#onBind(android.content.Intent)} method.
  * {@link ServiceConnection#onServiceConnected(android.content.ComponentName, android.os.IBinder)}
- *
+ * 
  * @author Philipp Kumar
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Inject
+public @interface InjectService
 {
     String action() default Intent.ACTION_VIEW;
 

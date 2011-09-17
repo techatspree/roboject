@@ -31,7 +31,7 @@ import android.os.IBinder;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.RobojectLifecycle;
-import de.akquinet.android.roboject.annotations.Inject;
+import de.akquinet.android.roboject.annotations.InjectService;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
 
@@ -90,7 +90,7 @@ public class ServiceInjector implements Injector
     @Override
     public void start(Context context, Container container, Object managed) {
         this.state = InjectorState.STARTED;
-        List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), Inject.class);
+        List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), InjectService.class);
 
         for (Field field : fields) {
             fieldInjections.put(field, false);
@@ -139,10 +139,10 @@ public class ServiceInjector implements Injector
     }
 
     private void injectService(final Field field) {
-        Inject annotation = field.getAnnotation(Inject.class);
+        InjectService annotation = field.getAnnotation(InjectService.class);
         if (annotation == null) {
             throw new IllegalArgumentException("Given field " + field.getName()
-                    + " is not annotated with " + Inject.class.getName());
+                    + " is not annotated with " + InjectService.class.getName());
         }
 
         String action = annotation.action();
