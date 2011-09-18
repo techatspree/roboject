@@ -15,13 +15,13 @@ If you are unsure which license is appropriate for your use, please contact the 
 package de.akquinet.android.robojecttest.activities;
 
 import de.akquinet.android.roboject.RobojectActivity;
-import de.akquinet.android.roboject.annotations.Inject;
+import de.akquinet.android.roboject.annotations.InjectService;
 import de.akquinet.android.robojecttest.services.TestService;
 import de.akquinet.android.robojecttest.services.TestService.AdderService;
 
 
 public class InjectServiceTestActivity extends RobojectActivity
 {
-    @Inject(clazz=TestService.class)
+    @InjectService(clazz=TestService.class)
     public AdderService adderService;
 }
