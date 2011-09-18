@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="de.akquinet.android.robojecttest" android:versionCode="1"
-          android:versionName="1.0"
-        >
-    <application android:icon="@drawable/icon" android:label="Roboject Tests" android:debuggable="true"
-                 android:name="de.akquinet.android.roboject.RobojectApplication">
-        <uses-library android:name="android.test.runner"/>
+    package="de.akquinet.android.robojecttest" android:versionCode="1"
+    android:versionName="1.0"
+>
+    <application android:icon="@drawable/icon"
+        android:label="Roboject Tests" android:debuggable="true"
+        android:name="de.akquinet.android.roboject.RobojectApplication"
+    >
+        <uses-library android:name="android.test.runner" />
         <service android:name=".services.TestService"></service>
         <activity android:name=".activities.InjectViewTestActivity"></activity>
         <activity android:name=".activities.InjectLayoutTestActivity"></activity>
@@ -14,9 +16,9 @@
         <activity android:name=".activities.InjectObjectTestActivityB"></activity>
     </application>
 
-    <uses-sdk android:minSdkVersion="4"/>
+    <uses-sdk android:minSdkVersion="4" />
 
     <instrumentation android:targetPackage="de.akquinet.android.robojecttest"
-                     android:name="android.test.InstrumentationTestRunner"/>
+        android:name="android.test.InstrumentationTestRunner" />
 
 </manifest>

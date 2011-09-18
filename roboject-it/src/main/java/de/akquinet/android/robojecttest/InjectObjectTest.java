@@ -11,38 +11,36 @@ This file may be used under the terms of the GNU General Public License version 
 
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
 
-*/
+ */
 package de.akquinet.android.robojecttest;
 
-import android.app.Activity;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+
+import java.util.concurrent.TimeUnit;
+
 import de.akquinet.android.marvin.ActivityTestCase;
 import de.akquinet.android.robojecttest.activities.InjectObjectTestActivityA;
 import de.akquinet.android.robojecttest.activities.InjectObjectTestActivityB;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
-
-public class InjectObjectTest extends ActivityTestCase<InjectObjectTestActivityA> {
+public class InjectObjectTest extends ActivityTestCase<InjectObjectTestActivityA>
+{
     public InjectObjectTest() {
         super(InjectObjectTestActivityA.class);
     }
 
-    public void testInjectObjectLayoutWithFieldName() throws Exception {
-        getActivity().startSecondActivity();
-        Thread.sleep(2000);
-        Activity activity = getMostRecentlyStartedActivity();
+    public void testInjectObject() throws Exception {
+        int someInt = 261;
 
-        assertThat(activity, instanceOf(InjectObjectTestActivityB.class));
-        assertThat(((InjectObjectTestActivityB) activity).getMySet(), is(not(nullValue())));
-    }
+        getActivity().startSecondActivity(someInt);
+        InjectObjectTestActivityB activityB =
+                waitForActivity(InjectObjectTestActivityB.class, 10, TimeUnit.SECONDS);
 
-    public void testInjectObjectLayoutWithValue() throws Exception {
-        getActivity().startSecondActivity();
-        Thread.sleep(2000);
-        Activity activity = getMostRecentlyStartedActivity();
+        assertThat(activityB, notNullValue());
 
-        assertThat(activity, instanceOf(InjectObjectTestActivityB.class));
-        assertThat(((InjectObjectTestActivityB) activity).getMySet(), is(not(nullValue())));
+        assertThat(activityB.objectExtra, notNullValue());
+
+        assertThat(activityB.objectExtra.value, is(someInt));
     }
 }

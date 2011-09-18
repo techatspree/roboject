@@ -11,36 +11,37 @@ This file may be used under the terms of the GNU General Public License version 
 
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
 
-*/
+ */
 package de.akquinet.android.robojecttest.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import de.akquinet.android.roboject.RobojectActivity;
-import de.akquinet.android.roboject.RobojectApplication;
 import de.akquinet.android.robojecttest.R;
 
-import java.util.HashSet;
-import java.util.Set;
 
+public class InjectObjectTestActivityA extends RobojectActivity
+{
+    public static class NonSerializableObject
+    {
+        public final int value;
 
-public class InjectObjectTestActivityA extends RobojectActivity {
+        public NonSerializableObject(int value) {
+            this.value = value;
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.viewinject);
         super.onCreate(savedInstanceState);
     }
 
-    public void startSecondActivity() {
-        RobojectApplication application = (RobojectApplication) getApplication();
-
+    public void startSecondActivity(int someValue) {
         Intent intent = new Intent();
         intent.setClass(this, InjectObjectTestActivityB.class);
-
-        Set<String> mySet = new HashSet<String>();
-        mySet.add("Hello Android");
-        application.storeData(InjectObjectTestActivityB.class, "mySet", mySet);
-        application.storeData(InjectObjectTestActivityB.class, "mySet2", mySet);
+        putObjectIntentExtra(intent, "objectExtra", new NonSerializableObject(someValue));
+        
         startActivity(intent);
     }
 }

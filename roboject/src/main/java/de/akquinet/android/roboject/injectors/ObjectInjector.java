@@ -14,7 +14,12 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.roboject.injectors;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectApplication;
@@ -22,14 +27,10 @@ import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectObject;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
 public class ObjectInjector implements Injector {
 
     private Activity activity;
-    private Map<String, Object> dataSet;
+    private RobojectApplication robojectApp;
     private InjectorState state = InjectorState.CREATED;
 
     /**
@@ -51,10 +52,10 @@ public class ObjectInjector implements Injector {
             throws RobojectException {
         if (managed instanceof Activity) {
             this.activity = (Activity) context;
-            if (this.activity.getApplication() instanceof RobojectApplication) {
-                RobojectApplication application = (RobojectApplication) this.activity.getApplication();
-                this.dataSet = (Map<String, Object>) application.getDataSet(this.activity.getClass());
-                return this.dataSet != null;
+            Application app = this.activity.getApplication();
+            if (app instanceof RobojectApplication) {
+                this.robojectApp = (RobojectApplication) app;
+                return true;
             }
         }
 
@@ -100,7 +101,7 @@ public class ObjectInjector implements Injector {
      */
     @Override
     public boolean isValid() {
-        return this.activity != null && this.dataSet != null;
+        return this.activity != null && this.robojectApp != null;
     }
 
     /**
@@ -136,9 +137,13 @@ public class ObjectInjector implements Injector {
             if (key == null || key == "")
                 key = field.getName();
 
-            Object value = dataSet.get(key);
+            Map<String, Object> objectIntentExtras = robojectApp.getObjectIntentExtras(
+                    activity.getIntent());
+            Object value = objectIntentExtras.get(key);
             if (value == null)
-                throw new RuntimeException("Error initializing field " + field.getName() + ". No matching value found.");
+                throw new RuntimeException("Could not inject a suitable object"
+                        + " for field " + field.getName() + " of type "
+                        + field.getType());
 
             try {
                 field.setAccessible(true);
@@ -147,6 +152,9 @@ public class ObjectInjector implements Injector {
                 throw new RuntimeException("Could not inject a suitable object"
                         + " for field " + field.getName() + " of type "
                         + field.getType(), e);
+            }
+            finally {
+                robojectApp.putObjectIntentExtras(activity.getIntent(), objectIntentExtras);
             }
         }
     }
