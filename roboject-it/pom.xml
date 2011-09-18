@@ -30,12 +30,12 @@ If you are unsure which license is appropriate for your use, please contact the 
         <dependency>
             <groupId>de.akquinet.android.roboject</groupId>
             <artifactId>roboject</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>de.akquinet.android.marvin</groupId>
             <artifactId>marvin</artifactId>
-            <version>0.2.1-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
