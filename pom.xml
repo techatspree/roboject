@@ -9,13 +9,12 @@
     license is appropriate for your use, please contact the sales department 
     at http://www.akquinet.de/en. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
->
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.akquinet.android.roboject</groupId>
     <artifactId>roboject-project</artifactId>
-    <version>0.2.7-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -38,14 +37,14 @@
             <name>GNU GENERAL PUBLIC LICENSE (GPLv3)</name>
             <url>http://www.opensource.org/licenses/gpl-3.0.html</url>
             <comments>
-            The GNU GPL permits use of this library in free but not proprietary programs
+                The GNU GPL permits use of this library in free but not proprietary programs
             </comments>
         </license>
         <license>
             <name>Commercial License</name>
             <url>http://www.akquinet.de/en</url>
             <comments>
-            This license allows using this product in commercial applications.
+                This license allows using this product in commercial applications.
             </comments>
         </license>
     </licenses>
