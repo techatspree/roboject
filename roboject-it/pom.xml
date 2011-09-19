@@ -35,7 +35,7 @@ If you are unsure which license is appropriate for your use, please contact the 
         <dependency>
             <groupId>de.akquinet.android.marvin</groupId>
             <artifactId>marvin</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
 
