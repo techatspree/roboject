@@ -1,0 +1,7 @@
+1.0.1
+-----
+    * Support injection of non-serializable non-parcellable Intent extras
+
+1.0.0
+-----
+    * Initial Release

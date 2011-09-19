@@ -24,7 +24,7 @@
     </parent>
 
     <name>Roboject Project</name>
-    <description>-</description>
+    <description>An injection framework for Android</description>
     <inceptionYear>2010</inceptionYear>
 
     <organization>
@@ -118,13 +118,22 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <useReleaseProfile>true</useReleaseProfile>
+                    <goals>deploy</goals>
+					<arguments>-Pit,release</arguments>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <scm>
-        <connection>scm:git:git@github.com:philippkumar/roboject.git</connection>
-        <url>git@github.com:philippkumar/roboject.git</url>
-        <developerConnection>scm:git:git@github.com:philippkumar/roboject.git</developerConnection>
+        <connection>scm:git:git@github.com:akquinet/roboject.git</connection>
+        <url>git@github.com:akquinet/roboject.git</url>
+        <developerConnection>scm:git:git@github.com:akquinet/roboject.git</developerConnection>
     </scm>
 
     <profiles>
