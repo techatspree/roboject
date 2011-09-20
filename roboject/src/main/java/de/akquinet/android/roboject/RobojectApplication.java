@@ -1,21 +1,19 @@
 package de.akquinet.android.roboject;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import android.app.Application;
 import android.content.Intent;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-public class RobojectApplication extends Application
-{
-    private Map<Intent, Map<String, Object>> objectIntentExtras;
+
+public class RobojectApplication extends Application {
+    private Map<Intent.FilterComparison, Map<String, Object>> objectIntentExtras;
 
     @Override
     public void onCreate() {
-        objectIntentExtras = new HashMap<Intent, Map<String, Object>>();
+        objectIntentExtras = new HashMap<Intent.FilterComparison, Map<String, Object>>();
     }
 
     @Override
@@ -25,17 +23,15 @@ public class RobojectApplication extends Application
     }
 
     public Map<String, Object> getObjectIntentExtras(Intent intent) {
-        for (Entry<Intent, Map<String, Object>> entry : objectIntentExtras.entrySet()) {
-            Intent key = entry.getKey();
-            if (key.filterEquals(intent)) {
-                return entry.getValue();
-            }
+        Map<String, Object> intentExtras = objectIntentExtras.get(new Intent.FilterComparison(intent));
+        if (intentExtras != null) {
+            return intentExtras;
         }
 
-        return Collections.<String, Object> emptyMap();
+        return Collections.<String, Object>emptyMap();
     }
 
     public void putObjectIntentExtras(Intent intent, Map<String, Object> extras) {
-        objectIntentExtras.put(intent, extras);
+        objectIntentExtras.put(new Intent.FilterComparison(intent), extras);
     }
 }
