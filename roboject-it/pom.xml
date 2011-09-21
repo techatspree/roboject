@@ -48,7 +48,6 @@ If you are unsure which license is appropriate for your use, please contact the 
                     <sdk>
                         <platform>4</platform>
                     </sdk>
-                    <deleteConflictingFiles>true</deleteConflictingFiles>
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
                     <extractDuplicates>true</extractDuplicates>
                 </configuration>
