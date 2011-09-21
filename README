@@ -1,0 +1,12 @@
+Roboject is a light-weight injection framework for Android.
+
+Roboject eases the use of objects related to your activity like views and
+intent extras by injecting them for you through the use of annotations.
+It also allows you to easily inject services to your activities by extending
+Android's default activity lifecycle.
+
+Credits
+-------
+Roboject is an open source project founded by akquinet (http://akquinet.de/en),
+licensed using a dual-license model (see LICENSING).
+Roboject is part of the StAnD (http://stand.spree.de).
