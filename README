@@ -1,7 +1,7 @@
 Roboject is a light-weight injection framework for Android.
 
-Roboject eases the use of objects related to your activity like views and
-intent extras by injecting them for you through the use of annotations.
+Roboject eases the use of objects related to your activity like layouts,
+views and intent extras by injecting them for you through the use of annotations.
 It also allows you to easily inject services to your activities by extending
 Android's default activity lifecycle.
 
