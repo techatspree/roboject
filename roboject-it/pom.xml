@@ -17,7 +17,7 @@ If you are unsure which license is appropriate for your use, please contact the 
     <parent>
         <groupId>de.akquinet.android.roboject</groupId>
         <artifactId>roboject-project</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>roboject-it</artifactId>
