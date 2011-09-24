@@ -101,7 +101,7 @@ public class ObjectInjector implements Injector {
      */
     @Override
     public boolean isValid() {
-        return this.activity != null && this.robojectApp != null;
+        return this.activity != null;
     }
 
     /**
@@ -154,6 +154,7 @@ public class ObjectInjector implements Injector {
                         + field.getType(), e);
             }
             finally {
+                objectIntentExtras.remove(value);
                 robojectApp.putObjectIntentExtras(activity.getIntent(), objectIntentExtras);
             }
         }
