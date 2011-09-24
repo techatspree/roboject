@@ -32,6 +32,7 @@ public class RobojectConfiguration
             result.add(new IntentExtraInjector());
             result.add(new LayoutInjector());
             result.add(new ObjectInjector());
+            result.add(new ResourceInjector());
         }
 
         return result;

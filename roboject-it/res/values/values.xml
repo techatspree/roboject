@@ -1,0 +1,15 @@
+<resources>
+    <string name="theString">Text</string>
+    <integer name="theInteger">42</integer>
+    <bool name="theBoolean">true</bool>
+    <dimen name="theDimen">10px</dimen>
+    <string-array name="theStringArray">
+        <item>String1</item>
+        <item>String2</item>
+    </string-array>
+    <integer-array name="theIntArray">
+        <item>42</item>
+        <item>47</item>
+    </integer-array>
+
+</resources>

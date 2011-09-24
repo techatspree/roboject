@@ -14,6 +14,7 @@
         <activity android:name=".activities.InjectServiceTestActivity"></activity>
         <activity android:name=".activities.InjectObjectTestActivityA"></activity>
         <activity android:name=".activities.InjectObjectTestActivityB"></activity>
+        <activity android:name=".activities.InjectResourceTestActivity"></activity>
     </application>
 
     <uses-sdk android:minSdkVersion="4" />
