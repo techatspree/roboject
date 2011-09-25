@@ -36,6 +36,10 @@ public class InjectResourceTest extends ActivityTestCase<InjectResourceTestActiv
         assertThat(getActivity().icon, notNullValue());
         assertThat(getActivity().theStringArray, notNullValue());
         assertThat(getActivity().theIntArray, notNullValue());
+
     }
 
+    public void testInjectResourceById() {
+        assertThat(getActivity().theColor, notNullValue());
+    }
 }

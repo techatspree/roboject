@@ -11,5 +11,5 @@
         <item>42</item>
         <item>47</item>
     </integer-array>
-
+    <color name="theColor">#80ff0000</color>
 </resources>

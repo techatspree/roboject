@@ -96,7 +96,7 @@ public class AndroidUtil {
         else if (type.isAssignableFrom(Float.TYPE) || type.isAssignableFrom(Float.class))
             return "dimen";
 
-        return "";
+        throw new RuntimeException("No suitable type found for " + field.getName() + "of class " + type.getName());
     }
 
     public static Object getResource(Activity activity, Field field, int value) {
@@ -106,21 +106,7 @@ public class AndroidUtil {
         if (type.isAssignableFrom(Boolean.TYPE) || type.isAssignableFrom(Boolean.class))
             return resources.getBoolean(value);
         else if (type.isAssignableFrom(Integer.TYPE) || type.isAssignableFrom(Integer.class)) {
-            Integer result;
-            try {
-                result = resources.getInteger(value);
-            } catch (Resources.NotFoundException e1) {
-                try {
-                    result = resources.getDimensionPixelOffset(value);
-                } catch (Resources.NotFoundException e2) {
-                    try {
-                        result = resources.getDimensionPixelSize(value);
-                    } catch (Resources.NotFoundException e3) {
-                        result = resources.getColor(value);
-                    }
-                }
-            }
-            return result;
+            return resources.getInteger(value);
         } else if (type.isAssignableFrom(ColorStateList.class))
             return resources.getColorStateList(value);
         else if (type.isAssignableFrom(XmlResourceParser.class))
@@ -129,12 +115,8 @@ public class AndroidUtil {
             return resources.getDimension(value);
         else if (type.isAssignableFrom(Drawable.class))
             return resources.getDrawable(value);
-        else if (type.isAssignableFrom(Integer[].class))
-            return resources.getIntArray(value);
         else if (type.isAssignableFrom(Animation.class))
             return AnimationUtils.loadAnimation(activity, value);
-        else if (type.isAssignableFrom(Movie.class))
-            return resources.getMovie(value);
         else if (type.isAssignableFrom(Movie.class))
             return resources.getMovie(value);
         else if (type.isAssignableFrom(String.class))

@@ -53,6 +53,9 @@ public class InjectResourceTestActivity extends RobojectActivity
     @InjectResource
     public int[] theIntArray;
 
+    @InjectResource(value = R.color.theColor)
+    public Integer theColor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.viewinject);
