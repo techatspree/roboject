@@ -1,3 +1,7 @@
+1.0.3
+-----
+    * Deactivate all logging
+
 1.0.2
 -----
     * Fix critical bug that requires having an application object of type RobojectApplication
