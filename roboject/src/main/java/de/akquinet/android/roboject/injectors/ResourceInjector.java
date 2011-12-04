@@ -1,20 +1,15 @@
 package de.akquinet.android.roboject.injectors;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
-import android.util.Log;
-import android.view.View;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectResource;
-import de.akquinet.android.roboject.annotations.InjectView;
 import de.akquinet.android.roboject.util.AndroidUtil;
 import de.akquinet.android.roboject.util.ReflectionUtil;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.List;
 
 
 public class ResourceInjector implements Injector {
@@ -118,8 +113,6 @@ public class ResourceInjector implements Injector {
         try {
             Object resource = AndroidUtil.getResource(activity, field, value);
 
-            Log.i(getClass().getName(),
-                    "Injecting value '" + resource + "' for field '" + field.getName() + "'...");
             field.setAccessible(true);
             field.set(activity, resource);
         } catch (Exception e) {

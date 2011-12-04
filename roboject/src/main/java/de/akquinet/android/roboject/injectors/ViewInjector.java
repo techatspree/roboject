@@ -124,8 +124,6 @@ public class ViewInjector implements Injector
         }
         try {
             View view = activity.findViewById(value);
-            Log.i(getClass().getName(),
-                    "Injecting value '" + view + "' for field '" + field.getName() + "'...");
             field.setAccessible(true);
             field.set(activity, view);
         }

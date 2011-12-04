@@ -252,7 +252,7 @@ public class IntentExtraInjector implements Injector
                     throw new RuntimeException(message);
                 }
                 else {
-                    Log.i(getClass().getCanonicalName(), message);
+                    // Log.i(getClass().getCanonicalName(), message);
                     return;
                 }
             }
