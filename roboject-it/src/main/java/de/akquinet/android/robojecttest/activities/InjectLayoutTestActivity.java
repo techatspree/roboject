@@ -16,9 +16,8 @@ package de.akquinet.android.robojecttest.activities;
 
 import de.akquinet.android.roboject.RobojectActivity;
 import de.akquinet.android.roboject.annotations.InjectLayout;
-import de.akquinet.android.robojecttest.R;
 
-@InjectLayout(R.layout.viewinject)
+@InjectLayout("viewinject")
 public class InjectLayoutTestActivity extends RobojectActivity {
 
 }

@@ -1,12 +1,7 @@
 package de.akquinet.android.roboject.injectors;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
@@ -14,29 +9,27 @@ import de.akquinet.android.roboject.annotations.InjectView;
 import de.akquinet.android.roboject.util.AndroidUtil;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.List;
 
-public class ViewInjector implements Injector
-{
+
+public class ViewInjector implements Injector {
     private Activity activity;
     private InjectorState state = InjectorState.CREATED;
 
     /**
      * Method called by the container to initialize the container.
-     * 
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
-     * @param clazz
-     *            the managed class (the class of <tt>managed</tt>)
+     *
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
+     * @param clazz     the managed class (the class of <tt>managed</tt>)
      * @return <code>true</code> if the injector wants to contribute to the
      *         management of the instance, <code>false</code> otherwise. In this
      *         latter case, the injector will be
      *         ignored for this instance.
-     * @throws RobojectException
-     *             if the configuration failed.
+     * @throws RobojectException if the configuration failed.
      */
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
@@ -55,13 +48,10 @@ public class ViewInjector implements Injector
      * after configure). This method is called on valid injector only.
      * In this method, the injector can injects field and call callbacks
      * (however, callbacks may wait the validate call).
-     * 
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
+     *
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
      */
 
     @Override
@@ -74,11 +64,9 @@ public class ViewInjector implements Injector
      * method is
      * called on valid injector only.
      * In this method, the injector can free resources
-     * 
-     * @param context
-     *            the android context
-     * @param managed
-     *            the managed instance
+     *
+     * @param context the android context
+     * @param managed the managed instance
      */
     @Override
     public void stop(Context context, Object managed) {
@@ -87,7 +75,7 @@ public class ViewInjector implements Injector
 
     /**
      * Checks whether the injector is valid or not.
-     * 
+     *
      * @return <code>true</code> if the injector is valid (ready),
      *         <code>false</code> otherwise.
      */
@@ -117,17 +105,14 @@ public class ViewInjector implements Injector
      * name to lookup the id in the application's R class.
      */
     private void injectView(Field field, InjectView injectViewAnno) {
-        int value = injectViewAnno.value();
-        if (value == InjectView.DEFAULT_VALUE) {
-            // No value specified in annotation. Check R class then.
-            value = AndroidUtil.getIdentifierFromR(activity, "id", field.getName());
-        }
+        String value = injectViewAnno.value();
+        int id = (value == InjectView.DEFAULT_VALUE) ? AndroidUtil.getIdentifierFromR(activity, "id", field.getName())
+                : AndroidUtil.getIdentifierFromR(activity, "id", value);
         try {
-            View view = activity.findViewById(value);
+            View view = activity.findViewById(id);
             field.setAccessible(true);
             field.set(activity, view);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("Could not inject a suitable view"
                     + " for field " + field.getName() + " of type "
                     + field.getType(), e);

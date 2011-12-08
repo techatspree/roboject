@@ -105,13 +105,12 @@ public class ResourceInjector implements Injector {
      * e.g. String maps to R.values
      */
     private void injectResource(Field field, InjectResource injectResourceAnno) {
-        int value = injectResourceAnno.value();
-        if (value == InjectResource.DEFAULT_VALUE) {
-            // No value specified in annotation. Check R class then.
-            value = AndroidUtil.getIdentifierFromR(activity, AndroidUtil.getTypeForField(field), field.getName());
-        }
+        String name = injectResourceAnno.name() == InjectResource.DEFAULT_VALUE ? field.getName() : injectResourceAnno.name();
+        String type = injectResourceAnno.type() == InjectResource.DEFAULT_VALUE ? AndroidUtil.getTypeForField(field) : injectResourceAnno.type();
+        int id = AndroidUtil.getIdentifierFromR(activity, type, name);
+
         try {
-            Object resource = AndroidUtil.getResource(activity, field, value);
+            Object resource = AndroidUtil.getResource(activity, field, id);
 
             field.setAccessible(true);
             field.set(activity, resource);

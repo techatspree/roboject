@@ -38,11 +38,11 @@ import android.app.Activity;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = ElementType.FIELD)
 public @interface InjectView {
-    int DEFAULT_VALUE = -1;
+    String DEFAULT_VALUE = "";
 
     /**
      * Defines the id of the view to inject. If not supplied,
      * R.id.X will be used, where X is the name of the annotated field.
      */
-    int value() default DEFAULT_VALUE;
+    String value() default DEFAULT_VALUE;
 }

@@ -5,31 +5,27 @@ import android.content.Context;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectLayout;
+import de.akquinet.android.roboject.util.AndroidUtil;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
 
-public class LayoutInjector implements Injector
-{
+public class LayoutInjector implements Injector {
     private Activity activity;
     private InjectorState state = InjectorState.CREATED;
 
     /**
      * Method called by the container to initialize the container.
      *
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
-     * @param clazz
-     *            the managed class (the class of <tt>managed</tt>)
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
+     * @param clazz     the managed class (the class of <tt>managed</tt>)
      * @return <code>true</code> if the injector wants to contribute to the
      *         management of the instance, <code>false</code> otherwise. In this
      *         latter case, the injector will be
      *         ignored for this instance.
      * @throws de.akquinet.android.roboject.RobojectException
-     *             if the configuration failed.
+     *          if the configuration failed.
      */
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
@@ -48,13 +44,10 @@ public class LayoutInjector implements Injector
      * after configure). This method is called on valid injector only.
      * In this method, the injector can injects field and call callbacks
      * (however, callbacks may wait the validate call).
-     * 
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
+     *
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
      */
 
     @Override
@@ -67,11 +60,9 @@ public class LayoutInjector implements Injector
      * method is
      * called on valid injector only.
      * In this method, the injector can free resources
-     * 
-     * @param context
-     *            the android context
-     * @param managed
-     *            the managed instance
+     *
+     * @param context the android context
+     * @param managed the managed instance
      */
     @Override
     public void stop(Context context, Object managed) {
@@ -80,7 +71,7 @@ public class LayoutInjector implements Injector
 
     /**
      * Checks whether the injector is valid or not.
-     * 
+     *
      * @return <code>true</code> if the injector is valid (ready),
      *         <code>false</code> otherwise.
      */
@@ -116,8 +107,10 @@ public class LayoutInjector implements Injector
     @Override
     public void onCreate() {
         InjectLayout layoutAnnotation = ReflectionUtil.getAnnotation(activity.getClass(), InjectLayout.class);
-        if (layoutAnnotation != null)
-            activity.setContentView(layoutAnnotation.value());
+        if (layoutAnnotation != null) {
+            int id = AndroidUtil.getIdentifierFromR(activity, "layout", layoutAnnotation.value());
+            activity.setContentView(id);
+        }
     }
 
     @Override

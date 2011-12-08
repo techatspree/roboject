@@ -17,15 +17,13 @@ package de.akquinet.android.robojecttest.activities;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.animation.Animation;
 import de.akquinet.android.roboject.RobojectActivity;
 import de.akquinet.android.roboject.annotations.InjectResource;
 import de.akquinet.android.robojecttest.R;
 
 
-public class InjectResourceTestActivity extends RobojectActivity
-{
+public class InjectResourceTestActivity extends RobojectActivity {
     @InjectResource
     public String theString;
 
@@ -53,7 +51,7 @@ public class InjectResourceTestActivity extends RobojectActivity
     @InjectResource
     public int[] theIntArray;
 
-    @InjectResource(value = R.color.theColor)
+    @InjectResource(type = "color", name = "theColor")
     public Integer theColor;
 
     @Override

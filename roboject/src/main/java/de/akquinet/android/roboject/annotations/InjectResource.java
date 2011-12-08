@@ -21,23 +21,25 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * Inject a view to the annotated field. For this to work, you must either use
- * {@link InjectLayout} on your activity or call
- * {@link android.app.Activity#setContentView(int)} during onCreate..() *before* calling
- * super.onCreate(..).
- *
+ * Inject a resource to the annotated field. For this to work, you must either use
  * <p>
- * You can specify the id of the view to inject as annotation value. If not
+ * You can specify the id of the resource to inject as annotation value name. If not
  * supplied, R.id.X will be used, where X is the name of the annotated field.
+ * You can also supply the type of the resource.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = ElementType.FIELD)
 public @interface InjectResource {
-    int DEFAULT_VALUE = -1;
+    String DEFAULT_VALUE = "";
 
     /**
      * Defines the id of the resource to inject. If not supplied,
      * R.X.Y will be used, where X is a type string according to the field type and Y the name of the annotated field.
      */
-    int value() default DEFAULT_VALUE;
+    String name() default DEFAULT_VALUE;
+
+    /**
+     * Overrides the type detection by specifying the concrete type of this resource, e.g. drawable or string
+     */
+    String type() default DEFAULT_VALUE;
 }

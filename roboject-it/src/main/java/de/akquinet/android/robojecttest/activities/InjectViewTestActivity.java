@@ -34,13 +34,13 @@ public class InjectViewTestActivity extends RobojectActivity
     @InjectView
     public LinearLayout theLinearLayout;
 
-    @InjectView(R.id.theTextView)
+    @InjectView("theTextView")
     public TextView theTextViewExplicitId;
 
-    @InjectView(R.id.theImageView)
+    @InjectView("theImageView")
     public ImageView theImageViewExplicitId;
 
-    @InjectView(R.id.theLinearLayout)
+    @InjectView("theLinearLayout")
     public LinearLayout theLinearLayoutExplicitId;
 
     @Override
