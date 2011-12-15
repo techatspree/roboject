@@ -14,13 +14,24 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.robojecttest.activities;
 
+import android.os.Bundle;
+import android.util.Log;
 import de.akquinet.android.roboject.RobojectActivity;
-import de.akquinet.android.roboject.annotations.InjectService;
-import de.akquinet.android.robojecttest.services.TestService;
-import de.akquinet.android.robojecttest.services.TestService.AdderService;
-
+import de.akquinet.android.roboject.ServiceRegistry;
+import de.akquinet.android.robojecttest.services.AdderImplementation;
 
 public class InjectLocalServiceTestActivity extends RobojectActivity {
-    @InjectService(clazz = TestService.class)
-    public AdderService adderService;
+
+    public AdderInterface adder;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ServiceRegistry.registerService(AdderInterface.class, AdderImplementation.class);
+        adder = ServiceRegistry.getService(AdderInterface.class);
+    }
+
+    public interface AdderInterface {
+        int add(int... params);
+    }
 }

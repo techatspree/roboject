@@ -1,11 +1,14 @@
 package de.akquinet.android.robojecttest.services;
 
-/**
- * Created by IntelliJ IDEA.
- * User: enrico
- * Date: 15.12.11
- * Time: 16:31
- * To change this template use File | Settings | File Templates.
- */
-public class AdderImplementation {
+import de.akquinet.android.robojecttest.activities.InjectLocalServiceTestActivity;
+
+public class AdderImplementation implements InjectLocalServiceTestActivity.AdderInterface {
+    @Override
+    public int add(int... params) {
+        int result = 0;
+        for (int param : params) {
+            result += param;
+        }
+        return result;
+    }
 }

@@ -5,7 +5,6 @@
 >
     <application android:icon="@drawable/icon"
         android:label="Roboject Tests" android:debuggable="true"
-        android:name="de.akquinet.android.roboject.RobojectApplication"
     >
         <uses-library android:name="android.test.runner" />
         <service android:name=".services.TestService"></service>
@@ -13,6 +12,7 @@
         <activity android:name=".activities.InjectViewTestActivity"></activity>
         <activity android:name=".activities.InjectLayoutTestActivity"></activity>
         <activity android:name=".activities.InjectServiceTestActivity"></activity>
+        <activity android:name=".activities.InjectLocalServiceTestActivity"></activity>
         <activity android:name=".activities.InjectRemoteServiceTestActivity"></activity>
         <activity android:name=".activities.InjectObjectTestActivityA"></activity>
         <activity android:name=".activities.InjectObjectTestActivityB"></activity>

@@ -26,7 +26,7 @@ public class InjectRemoteServiceTest extends ActivityTestCase<InjectRemoteServic
         super(InjectRemoteServiceTestActivity.class);
     }
 
-    public void testInjectRemoteService() throws Exception {
+    public void testInjectService() throws Exception {
         Thread.sleep(2000);
 
         assertThat(getActivity().adderService, notNullValue());

@@ -27,11 +27,11 @@ import android.os.IBinder;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import de.akquinet.android.roboject.annotations.InjectObject;
+import de.akquinet.android.roboject.util.IntentRegistry;
 
 
 public class RobojectActivity extends Activity
-        implements RobojectLifecycle, ServiceConnection
-{
+        implements RobojectLifecycle, ServiceConnection {
     private Container container;
 
     @Override
@@ -61,8 +61,7 @@ public class RobojectActivity extends Activity
         if (this.container == null) {
             try {
                 this.container = new Container(this, this, getClass());
-            }
-            catch (RobojectException e) {
+            } catch (RobojectException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -95,26 +94,21 @@ public class RobojectActivity extends Activity
      * intent extra, but does not require the object to be serializable or
      * parcellable. The object is injected to the activity matching the intent,
      * if that activity uses a matching {@link InjectObject} annotation.
-     * 
-     * @param intent
-     *            the intent matching the target activity to which we want to
-     *            pass the object
-     * @param key
-     *            an arbitrary String used as the intent extra key
+     *
+     * @param intent the intent matching the target activity to which we want to
+     *               pass the object
+     * @param key    an arbitrary String used as the intent extra key
      * @param value
      */
     protected void putObjectIntentExtra(Intent intent, String key, Object value) {
         Application application = getApplication();
-        if (application instanceof RobojectApplication) {
-            RobojectApplication roboApp = (RobojectApplication) application;
-            Map<String, Object> objectIntentExtras = roboApp.getObjectIntentExtras(intent);
-            if (objectIntentExtras == null || objectIntentExtras.isEmpty()) {
-                objectIntentExtras = new HashMap<String, Object>();
-                roboApp.putObjectIntentExtras(intent, objectIntentExtras);
-            }
-
-            objectIntentExtras.put(key, value);
+        Map<String, Object> objectIntentExtras = IntentRegistry.getObjectIntentExtras(intent);
+        if (objectIntentExtras == null || objectIntentExtras.isEmpty()) {
+            objectIntentExtras = new HashMap<String, Object>();
+            IntentRegistry.putObjectIntentExtras(intent, objectIntentExtras);
         }
+
+        objectIntentExtras.put(key, value);
     }
 
     @Override
@@ -129,8 +123,7 @@ public class RobojectActivity extends Activity
         if (this.container == null) {
             try {
                 this.container = new Container(this, this, getClass());
-            }
-            catch (RobojectException e) {
+            } catch (RobojectException e) {
                 throw new RuntimeException(e);
             }
         }

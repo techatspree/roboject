@@ -14,22 +14,21 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.roboject.injectors;
 
-import java.io.Serializable;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectExtra;
 import de.akquinet.android.roboject.util.ReflectionUtil;
+
+import java.io.Serializable;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class IntentExtraInjector implements Injector

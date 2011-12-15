@@ -19,18 +19,18 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import de.akquinet.android.roboject.Container;
-import de.akquinet.android.roboject.RobojectApplication;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectObject;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
+import static de.akquinet.android.roboject.util.IntentRegistry.getObjectIntentExtras;
+import static de.akquinet.android.roboject.util.IntentRegistry.putObjectIntentExtras;
+
 public class ObjectInjector implements Injector {
 
     private Activity activity;
-    private RobojectApplication robojectApp;
     private InjectorState state = InjectorState.CREATED;
 
     /**
@@ -52,13 +52,8 @@ public class ObjectInjector implements Injector {
             throws RobojectException {
         if (managed instanceof Activity) {
             this.activity = (Activity) context;
-            Application app = this.activity.getApplication();
-            if (app instanceof RobojectApplication) {
-                this.robojectApp = (RobojectApplication) app;
-                return true;
-            }
+            return true;
         }
-
         return false;
     }
 
@@ -134,10 +129,10 @@ public class ObjectInjector implements Injector {
         for (Field field : fields) {
             InjectObject annotation = field.getAnnotation(InjectObject.class);
             String key = annotation.value();
-            if (key == null || key == "")
+            if (key == null || "".equals(key))
                 key = field.getName();
 
-            Map<String, Object> objectIntentExtras = robojectApp.getObjectIntentExtras(
+            Map<String, Object> objectIntentExtras = getObjectIntentExtras(
                     activity.getIntent());
             Object value = objectIntentExtras.get(key);
             if (value == null)
@@ -152,10 +147,9 @@ public class ObjectInjector implements Injector {
                 throw new RuntimeException("Could not inject a suitable object"
                         + " for field " + field.getName() + " of type "
                         + field.getType(), e);
-            }
-            finally {
+            } finally {
                 objectIntentExtras.remove(value);
-                robojectApp.putObjectIntentExtras(activity.getIntent(), objectIntentExtras);
+                putObjectIntentExtras(activity.getIntent(), objectIntentExtras);
             }
         }
     }
