@@ -14,13 +14,6 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.roboject.injectors;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -28,15 +21,18 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.util.Log;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.RobojectLifecycle;
 import de.akquinet.android.roboject.annotations.InjectService;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
+import java.lang.reflect.Field;
+import java.util.*;
 
-public class ServiceInjector implements Injector
-{
+
+public class ServiceInjector implements Injector {
     private Context context;
     private Container container;
     private Object managed;
@@ -50,23 +46,18 @@ public class ServiceInjector implements Injector
     /**
      * Method called by the container to initialize the container.
      *
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
-     * @param clazz
-     *            the managed class (the class of <tt>managed</tt>)
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
+     * @param clazz     the managed class (the class of <tt>managed</tt>)
      * @return <code>true</code> if the injector wants to contribute to the
      *         management of the instance, <code>false</code> otherwise. In this
      *         latter case, the injector will be ignored for this instance.
-     * @throws RobojectException
-     *             if the configuration failed.
+     * @throws RobojectException if the configuration failed.
      */
     @Override
     public boolean configure(Context context, Container container,
-            Object managed, Class<?> clazz) throws RobojectException {
+                             Object managed, Class<?> clazz) throws RobojectException {
         this.context = context;
         this.container = container;
         this.managed = managed;
@@ -79,12 +70,9 @@ public class ServiceInjector implements Injector
      * only. In this method, the injector can injects field and call callbacks
      * (however, callbacks may wait the validate call).
      *
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
      */
 
     @Override
@@ -102,10 +90,8 @@ public class ServiceInjector implements Injector
      * method is called on valid injector only. In this method, the injector can
      * free resources
      *
-     * @param context
-     *            the android context
-     * @param managed
-     *            the managed instance
+     * @param context the android context
+     * @param managed the managed instance
      */
     @Override
     public void stop(Context context, Object managed) {
@@ -173,13 +159,25 @@ public class ServiceInjector implements Injector
         ServiceConnection serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                if (field.getType().isAssignableFrom(service.getClass())) {
+                Object binder = service;
+
+                if (!field.getType().isAssignableFrom(binder.getClass())) {
+                    try {
+                        Class<?>[] classes = field.getType().getClasses();
+                        binder = classes[0].getDeclaredMethod("asInterface", IBinder.class).invoke(null, service);
+                    } catch (Exception e) {
+                        throw new RuntimeException("Unable to inject service", e);
+                    }
+                }
+
+                if (field.getType().isAssignableFrom(binder.getClass())) {
+                    Log.v("ServiceInjector", "Field is assignable");
+
                     try {
                         field.setAccessible(true);
-                        field.set(managed, service);
+                        field.set(managed, binder);
                         fieldInjections.put(field, true);
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         // TODO: better error message
                         throw new RuntimeException("Unable to inject service", e);
                     }
@@ -201,10 +199,8 @@ public class ServiceInjector implements Injector
 
                 try {
                     field.set(managed, null);
-                }
-                catch (IllegalArgumentException e) {
-                }
-                catch (IllegalAccessException e) {
+                } catch (IllegalArgumentException e) {
+                } catch (IllegalAccessException e) {
                 }
                 ServiceInjector.this.managed = null;
             }
@@ -229,6 +225,7 @@ public class ServiceInjector implements Injector
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... arg0) {
+                Log.v("ServiceInjector", "Invoking services connected life cycle");
                 invokeServicesConnectedLifeCycle();
                 return null;
             }
@@ -236,7 +233,9 @@ public class ServiceInjector implements Injector
             protected void onPostExecute(Void result) {
                 state = InjectorState.READY;
                 container.update();
-            };
+            }
+
+            ;
         }.execute();
     }
 
@@ -280,8 +279,7 @@ public class ServiceInjector implements Injector
     private void unbindSafely(Context appContext, ServiceConnection connection) {
         try {
             appContext.unbindService(connection);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // We were unable to unbind, e.g. because no such service binding
             // exists. This should be rare, but is possible, e.g. if the
             // service was killed by Android in the meantime.

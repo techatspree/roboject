@@ -9,9 +9,11 @@
     >
         <uses-library android:name="android.test.runner" />
         <service android:name=".services.TestService"></service>
+        <service android:name=".services.RemoteTestService" android:process=":remote"></service>
         <activity android:name=".activities.InjectViewTestActivity"></activity>
         <activity android:name=".activities.InjectLayoutTestActivity"></activity>
         <activity android:name=".activities.InjectServiceTestActivity"></activity>
+        <activity android:name=".activities.InjectRemoteServiceTestActivity"></activity>
         <activity android:name=".activities.InjectObjectTestActivityA"></activity>
         <activity android:name=".activities.InjectObjectTestActivityB"></activity>
         <activity android:name=".activities.InjectResourceTestActivity"></activity>
