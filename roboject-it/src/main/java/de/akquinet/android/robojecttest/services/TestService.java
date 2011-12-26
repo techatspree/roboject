@@ -18,7 +18,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.RemoteException;
 
 
 public class TestService extends Service
@@ -36,14 +35,6 @@ public class TestService extends Service
 
     @Override
     public IBinder onBind(Intent intent) {
-        return remoteBinder;
+        return new AdderService();
     }
-
-    private final IRemoteService.Stub remoteBinder = new IRemoteService.Stub() {
-
-        @Override
-        public int add(int x, int y) throws RemoteException {
-            return x + y;
-        }
-    };
 }
