@@ -25,6 +25,7 @@ import android.util.Log;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.RobojectLifecycle;
+import de.akquinet.android.roboject.ServiceRegistry;
 import de.akquinet.android.roboject.annotations.InjectService;
 import de.akquinet.android.roboject.util.ReflectionUtil;
 
@@ -131,11 +132,28 @@ public class ServiceInjector implements Injector {
                     + " is not annotated with " + InjectService.class.getName());
         }
 
-        String action = annotation.action();
-        boolean restrictToThisPackage = annotation.restrictToThisPackage();
+        // Try to inject a non-android service first...
+        {
+            Class<?> clazz = annotation.clazz();
+            if (Object.class.equals(clazz)) {
+                // Clazz annotation parameter not set.
+                // Use the type of the field.
+
+                clazz = field.getType();
+            }
+
+            Object service = ServiceRegistry.getService(clazz);
+            if (service != null) {
+                assign(field, service);
+                return;
+            }
+        }
+
+        String action = annotation.intentAction();
+        boolean restrictToThisPackage = annotation.packagePrivate();
         String className = annotation.clazz().getName();
-        int flags = annotation.flags();
-        String type = annotation.type();
+        int flags = annotation.intentFlags();
+        String type = annotation.intentType();
 
         Intent intent = new Intent();
         if (action != null && !"".equals(action.trim())) {
@@ -159,37 +177,7 @@ public class ServiceInjector implements Injector {
         ServiceConnection serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                Object binder = service;
-
-                if (!field.getType().isAssignableFrom(binder.getClass())) {
-                    try {
-                        Class<?>[] classes = field.getType().getClasses();
-                        binder = classes[0].getDeclaredMethod("asInterface", IBinder.class).invoke(null, service);
-                    } catch (Exception e) {
-                        throw new RuntimeException("Unable to inject service", e);
-                    }
-                }
-
-                if (field.getType().isAssignableFrom(binder.getClass())) {
-                    Log.v("ServiceInjector", "Field is assignable");
-
-                    try {
-                        field.setAccessible(true);
-                        field.set(managed, binder);
-                        fieldInjections.put(field, true);
-                    } catch (Exception e) {
-                        // TODO: better error message
-                        throw new RuntimeException("Unable to inject service", e);
-                    }
-
-                    for (Boolean injected : fieldInjections.values()) {
-                        if (!Boolean.TRUE.equals(injected)) {
-                            return;
-                        }
-                    }
-
-                    done();
-                }
+                assign(field, service);
             }
 
             @Override
@@ -208,6 +196,40 @@ public class ServiceInjector implements Injector {
         serviceConnections.add(serviceConnection);
         context.getApplicationContext().bindService(intent, serviceConnection,
                 Service.BIND_AUTO_CREATE);
+    }
+
+    private void assign(Field field, Object service) {
+        Object binder = service;
+
+        if (!field.getType().isAssignableFrom(binder.getClass())) {
+            try {
+                Class<?>[] classes = field.getType().getClasses();
+                binder = classes[0].getDeclaredMethod("asInterface", IBinder.class).invoke(null, service);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to inject service", e);
+            }
+        }
+
+        if (field.getType().isAssignableFrom(binder.getClass())) {
+            Log.v("ServiceInjector", "Field is assignable");
+
+            try {
+                field.setAccessible(true);
+                field.set(managed, binder);
+                fieldInjections.put(field, true);
+            } catch (Exception e) {
+                // TODO: better error message
+                throw new RuntimeException("Unable to inject service", e);
+            }
+
+            for (Boolean injected : fieldInjections.values()) {
+                if (!Boolean.TRUE.equals(injected)) {
+                    return;
+                }
+            }
+
+            done();
+        }
     }
 
     private void invokeServicesConnectedLifeCycle() {

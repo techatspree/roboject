@@ -39,7 +39,7 @@ import android.content.ServiceConnection;
 @Target(ElementType.FIELD)
 public @interface InjectService
 {
-    String action() default Intent.ACTION_VIEW;
+    String intentAction() default Intent.ACTION_VIEW;
 
     Class<?> clazz() default Object.class;
 
@@ -48,9 +48,9 @@ public @interface InjectService
      * the service is part of the same Android package). If false, exposed
      * services from other apps can be injected. The default is false.
      */
-    boolean restrictToThisPackage() default true;
+    boolean packagePrivate() default true;
 
-    int flags() default 0;
+    int intentFlags() default 0;
 
-    String type() default "";
+    String intentType() default "";
 }

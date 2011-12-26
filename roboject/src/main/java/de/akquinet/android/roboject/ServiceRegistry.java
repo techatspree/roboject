@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceRegistry {
-    private static final String TAG = "ServiceRegistry";
+    private static final String TAG = ServiceRegistry.class.getSimpleName();
     private static Map<Class, Class> registry = new HashMap<Class, Class>();
 
     public static <Type> void registerService(Class<Type> interfaceClass, Class<? extends Type> implementationClass) {
@@ -39,6 +39,7 @@ public class ServiceRegistry {
                 throw new RuntimeException("Unable to create instance of " + implementationClass.toString(), e);
             }
         }
-        throw new RuntimeException("Unable to create instance of " + implementationClass.toString());
+
+        return null;
     }
 }

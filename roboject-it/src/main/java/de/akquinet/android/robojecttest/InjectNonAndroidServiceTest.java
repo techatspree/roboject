@@ -15,21 +15,23 @@ If you are unsure which license is appropriate for your use, please contact the 
 package de.akquinet.android.robojecttest;
 
 import de.akquinet.android.marvin.ActivityTestCase;
-import de.akquinet.android.robojecttest.activities.InjectLocalServiceTestActivity;
-import de.akquinet.android.robojecttest.activities.InjectServiceTestActivity;
+import de.akquinet.android.robojecttest.activities.InjectNonAndroidServiceTestActivity;
 
 import static org.hamcrest.CoreMatchers.*;
 
 
-public class InjectLocalServiceTest extends ActivityTestCase<InjectLocalServiceTestActivity> {
-    public InjectLocalServiceTest() {
-        super(InjectLocalServiceTestActivity.class);
+public class InjectNonAndroidServiceTest extends ActivityTestCase<InjectNonAndroidServiceTestActivity> {
+    public InjectNonAndroidServiceTest() {
+        super(InjectNonAndroidServiceTestActivity.class);
     }
 
     public void testInjectLocalService() throws Exception {
         Thread.sleep(2000);
 
-        assertThat(getActivity().adder, notNullValue());
-        assertThat(getActivity().adder.add(2, 3), is(equalTo(5)));
+        assertThat(getActivity().adder1, notNullValue());
+        assertThat(getActivity().adder1.add(2, 3), is(equalTo(5)));
+
+        assertThat(getActivity().adder2, notNullValue());
+        assertThat(getActivity().adder2.add(2, 3), is(equalTo(5)));
     }
 }
