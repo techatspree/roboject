@@ -20,12 +20,12 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import de.akquinet.android.roboject.annotations.InjectObject;
 
 
-public class RobojectActivity extends Activity
+public class RobojectFragmentActivity extends FragmentActivity
         implements RobojectLifecycle, ServiceConnection {
     private Container container;
 
@@ -47,7 +47,7 @@ public class RobojectActivity extends Activity
 
     /**
      * Contract for subclasses: You need to call super before relying on
-     * injections in {@link #onCreate(Bundle)}.
+     * injections in {@link #onCreate(android.os.Bundle)}.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +79,10 @@ public class RobojectActivity extends Activity
     }
 
     /**
-     * Attaches an arbitrary object to an {@link Intent}. This works like an
+     * Attaches an arbitrary object to an {@link android.content.Intent}. This works like an
      * intent extra, but does not require the object to be serializable or
      * parcellable. The object is injected to the activity matching the intent,
-     * if that activity uses a matching {@link InjectObject} annotation.
+     * if that activity uses a matching {@link de.akquinet.android.roboject.annotations.InjectObject} annotation.
      *
      * @param intent the intent matching the target activity to which we want to
      *               pass the object

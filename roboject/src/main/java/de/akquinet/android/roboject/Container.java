@@ -14,11 +14,16 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.roboject;
 
-import java.util.List;
-
 import android.content.Context;
+import android.content.Intent;
+import de.akquinet.android.roboject.annotations.InjectObject;
 import de.akquinet.android.roboject.injectors.Injector;
 import de.akquinet.android.roboject.injectors.Injector.InjectorState;
+import de.akquinet.android.roboject.util.IntentRegistry;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class Container
@@ -95,6 +100,27 @@ public class Container
         if (managed instanceof RobojectLifecycle) {
             ((RobojectLifecycle) managed).onReady();
         }
+    }
+
+    /**
+     * Attaches an arbitrary object to an {@link Intent}. This works like an
+     * intent extra, but does not require the object to be serializable or
+     * parcellable. The object is injected to the activity matching the intent,
+     * if that activity uses a matching {@link InjectObject} annotation.
+     *
+     * @param intent the intent matching the target activity to which we want to
+     *               pass the object
+     * @param key    an arbitrary String used as the intent extra key
+     * @param value
+     */
+    protected void putObjectIntentExtra(Intent intent, String key, Object value) {
+        Map<String, Object> objectIntentExtras = IntentRegistry.getObjectIntentExtras(intent);
+        if (objectIntentExtras == null || objectIntentExtras.isEmpty()) {
+            objectIntentExtras = new HashMap<String, Object> ();
+            IntentRegistry.putObjectIntentExtras(intent, objectIntentExtras);
+        }
+
+        objectIntentExtras.put(key, value);
     }
 
     private boolean allInjectorsReady() {

@@ -27,6 +27,14 @@ If you are unsure which license is appropriate for your use, please contact the 
     <name>roboject</name>
     <description>-</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>android.support</groupId>
+            <artifactId>compatibility-v4</artifactId>
+            <version>r6</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
