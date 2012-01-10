@@ -19,37 +19,38 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 
-public class RobojectFragment extends FragmentActivity
+public class RobojectFragment extends Fragment
         implements RobojectLifecycle, ServiceConnection {
     private Container container;
 
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        onSetContentView();
-    }
-
-    @Override
-    public void setContentView(View view, LayoutParams params) {
-        super.setContentView(view, params);
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-    }
+//    @Override
+//    public void setContentView(int layoutResID) {
+//        super.setContentView(layoutResID);
+//        onSetContentView();
+//    }
+//
+//    @Override
+//    public void setContentView(View view, LayoutParams params) {
+//        super.setContentView(view, params);
+//    }
+//
+//    @Override
+//    public void setContentView(View view) {
+//        super.setContentView(view);
+//    }
 
     /**
      * Contract for subclasses: You need to call super before relying on
      * injections in {@link #onCreate(android.os.Bundle)}.
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         createContainer();
@@ -58,13 +59,13 @@ public class RobojectFragment extends FragmentActivity
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         this.container.invokeResumePhase();
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         this.container.invokeStopPhase();
     }
@@ -109,7 +110,7 @@ public class RobojectFragment extends FragmentActivity
     private void createContainer() {
         if (this.container == null) {
             try {
-                this.container = new Container(this, this, getClass());
+                this.container = new Container(getActivity(), this, getClass());
             } catch (RobojectException e) {
                 throw new RuntimeException(e);
             }
