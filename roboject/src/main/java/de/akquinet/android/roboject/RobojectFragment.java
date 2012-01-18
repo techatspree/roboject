@@ -14,15 +14,15 @@ If you are unsure which license is appropriate for your use, please contact the 
  */
 package de.akquinet.android.roboject;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+
+import java.lang.reflect.Method;
 
 
 public class RobojectFragment extends Fragment
@@ -110,8 +110,19 @@ public class RobojectFragment extends Fragment
     private void createContainer() {
         if (this.container == null) {
             try {
-                this.container = new Container(getActivity(), this, getClass());
-            } catch (RobojectException e) {
+                // Both the Android Support Library and ActionbarSherlock define
+                // getActivity() inside Fragment, but with different return types
+                // (FragmentActivity vs. Activity).
+                // That's why we call the method by reflection and cast the result to Activity.
+
+                Method getActivity = getClass().getMethod("getActivity", new Class[0]);
+                Object activity = getActivity.invoke(this, new Object[0]);
+                if (!(activity instanceof Activity)) {
+                    throw new RuntimeException("getActivity() returned null");
+                }
+
+                this.container = new Container((Activity) activity, this, getClass());
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
