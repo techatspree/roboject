@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectResource;
@@ -14,6 +15,7 @@ import de.akquinet.android.roboject.util.ReflectionUtil;
 
 public class ResourceInjector implements Injector {
     private Activity activity;
+    private Object managed;
     private InjectorState state = InjectorState.CREATED;
 
     /**
@@ -33,8 +35,14 @@ public class ResourceInjector implements Injector {
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
             throws RobojectException {
+        this.activity = (Activity) context;
+        this.managed = managed;
+
         if (managed instanceof Activity) {
-            this.activity = (Activity) context;
+            return true;
+        }
+
+        if (managed instanceof Fragment) {
             return true;
         }
 
@@ -113,7 +121,7 @@ public class ResourceInjector implements Injector {
             Object resource = AndroidUtil.getResource(activity, field, id);
 
             field.setAccessible(true);
-            field.set(activity, resource);
+            field.set(managed, resource);
         } catch (Exception e) {
             throw new RuntimeException("Could not inject a suitable resource"
                     + " for field " + field.getName() + " of type "
@@ -128,7 +136,7 @@ public class ResourceInjector implements Injector {
 
     @Override
     public void onSetContentView() {
-        List<Field> fields = ReflectionUtil.getAnnotatedFields(activity.getClass(), InjectResource.class);
+        List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), InjectResource.class);
         for (Field field : fields) {
             InjectResource annotation = field.getAnnotation(InjectResource.class);
             injectResource(field, annotation);

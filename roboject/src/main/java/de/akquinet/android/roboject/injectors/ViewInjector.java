@@ -2,6 +2,7 @@ package de.akquinet.android.roboject.injectors;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ViewInjector implements Injector {
     private Activity activity;
     private InjectorState state = InjectorState.CREATED;
+    private Object managed;
 
     /**
      * Method called by the container to initialize the container.
@@ -34,8 +36,24 @@ public class ViewInjector implements Injector {
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
             throws RobojectException {
-        if (managed instanceof Activity) {
+        
+        if (context instanceof Activity) {
             this.activity = (Activity) context;
+        } else {
+            return false;
+        }
+
+        this.managed = managed;
+
+        if (managed instanceof Activity) {
+            return true;
+        }
+
+        if (managed instanceof Fragment) {
+            return true;
+        }
+
+        if (managed instanceof android.app.Fragment) {
             return true;
         }
 
@@ -110,8 +128,9 @@ public class ViewInjector implements Injector {
                 : AndroidUtil.getIdentifierFromR(activity, "id", value);
         try {
             View view = activity.findViewById(id);
+//            View view = activity.getLayoutInflater().inflate(id, null, false);
             field.setAccessible(true);
-            field.set(activity, view);
+            field.set(managed, view);
         } catch (Exception e) {
             throw new RuntimeException("Could not inject a suitable view"
                     + " for field " + field.getName() + " of type "
@@ -126,7 +145,7 @@ public class ViewInjector implements Injector {
 
     @Override
     public void onSetContentView() {
-        List<Field> fields = ReflectionUtil.getFields(activity.getClass());
+        List<Field> fields = ReflectionUtil.getFields(managed.getClass());
         for (Field field : fields) {
             Annotation[] annotations = field.getAnnotations();
             for (Annotation annotation : annotations) {

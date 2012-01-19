@@ -20,6 +20,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectObject;
@@ -32,6 +33,7 @@ public class ObjectInjector implements Injector {
 
     private Activity activity;
     private InjectorState state = InjectorState.CREATED;
+    private Object managed;
 
     /**
      * Method called by the container to initialize the container.
@@ -50,10 +52,17 @@ public class ObjectInjector implements Injector {
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
             throws RobojectException {
+        this.activity = (Activity) context;
+        this.managed = managed;
+        
         if (managed instanceof Activity) {
-            this.activity = (Activity) context;
             return true;
         }
+
+        if (managed instanceof Fragment) {
+            return true;
+        }
+
         return false;
     }
 
@@ -125,15 +134,14 @@ public class ObjectInjector implements Injector {
 
     @Override
     public void onCreate() {
-        List<Field> fields = ReflectionUtil.getAnnotatedFields(activity.getClass(), InjectObject.class);
+        List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), InjectObject.class);
         for (Field field : fields) {
             InjectObject annotation = field.getAnnotation(InjectObject.class);
             String key = annotation.value();
             if (key == null || "".equals(key))
                 key = field.getName();
 
-            Map<String, Object> objectIntentExtras = getObjectIntentExtras(
-                    activity.getIntent());
+            Map<String, Object> objectIntentExtras = getObjectIntentExtras(activity.getIntent());
             Object value = objectIntentExtras.get(key);
             if (value == null)
                 throw new RuntimeException("Could not inject a suitable object"
@@ -142,7 +150,7 @@ public class ObjectInjector implements Injector {
 
             try {
                 field.setAccessible(true);
-                field.set(activity, value);
+                field.set(managed, value);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException("Could not inject a suitable object"
                         + " for field " + field.getName() + " of type "
