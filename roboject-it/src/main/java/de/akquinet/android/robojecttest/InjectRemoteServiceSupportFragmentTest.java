@@ -15,20 +15,23 @@ If you are unsure which license is appropriate for your use, please contact the 
 package de.akquinet.android.robojecttest;
 
 import de.akquinet.android.marvin.ActivityTestCase;
-import de.akquinet.android.robojecttest.activities.InjectRemoteServiceTestActivity;
+import de.akquinet.android.robojecttest.activities.DummySupportFragmentActivity;
+import de.akquinet.android.robojecttest.fragments.InjectRemoteServiceTestSupportFragment;
 
 import static org.hamcrest.CoreMatchers.*;
 
 
-public class InjectRemoteServiceTest extends ActivityTestCase<InjectRemoteServiceTestActivity> {
-    public InjectRemoteServiceTest() {
-        super(InjectRemoteServiceTestActivity.class);
+public class InjectRemoteServiceSupportFragmentTest extends ActivityTestCase<DummySupportFragmentActivity> {
+    public InjectRemoteServiceSupportFragmentTest() {
+        super(DummySupportFragmentActivity.class);
     }
 
     public void testInjectService() throws Exception {
         Thread.sleep(2000);
 
-        assertThat(getActivity().adderService, notNullValue());
-        assertThat(getActivity().adderService.add(2, 3), is(equalTo(5)));
+        InjectRemoteServiceTestSupportFragment fragment = (InjectRemoteServiceTestSupportFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.remoteServiceSupportFragment);
+
+        assertThat(fragment.adderService, notNullValue());
+        assertThat(fragment.adderService.add(2, 3), is(equalTo(5)));
     }
 }

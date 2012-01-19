@@ -12,29 +12,26 @@ This file may be used under the terms of the GNU General Public License version 
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
 
 */
-package de.akquinet.android.robojecttest.activities;
+package de.akquinet.android.robojecttest.fragments;
 
-import android.content.ComponentName;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.util.Log;
-import de.akquinet.android.roboject.RobojectActivity;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import de.akquinet.android.roboject.RobojectSupportFragment;
 import de.akquinet.android.roboject.annotations.InjectService;
+import de.akquinet.android.robojecttest.R;
 import de.akquinet.android.robojecttest.services.IRemoteService;
 import de.akquinet.android.robojecttest.services.RemoteTestService;
 
 
-public class InjectRemoteServiceTestActivity extends RobojectActivity {
+public class InjectRemoteServiceTestSupportFragment extends RobojectSupportFragment {
     @InjectService(clazz = RemoteTestService.class)
     public IRemoteService adderService;
 
     @Override
-    public void onServiceConnected(ComponentName name, IBinder serviceObject) {
-        super.onServiceConnected(name, serviceObject);
-        try {
-            Log.v("InjectRemoteServiceTestActivity", String.valueOf(adderService.add(22, 20)));
-        } catch (RemoteException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View inflate = inflater.inflate(R.layout.viewinject, container, false);
+        return inflate;
     }
 }

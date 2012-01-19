@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectExtra;
@@ -31,34 +32,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class IntentExtraInjector implements Injector
-{
+public class IntentExtraInjector implements Injector {
     private Activity activity;
     private InjectorState state = InjectorState.CREATED;
+    private Object managed;
 
     /**
      * Method called by the container to initialize the container.
      *
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
-     * @param clazz
-     *            the managed class (the class of <tt>managed</tt>)
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
+     * @param clazz     the managed class (the class of <tt>managed</tt>)
      * @return <code>true</code> if the injector wants to contribute to the
      *         management of the instance, <code>false</code> otherwise. In this
      *         latter case, the injector will be
      *         ignored for this instance.
-     * @throws RobojectException
-     *             if the configuration failed.
+     * @throws RobojectException if the configuration failed.
      */
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
             throws RobojectException {
-        if (managed instanceof Activity) {
+        if (context instanceof Activity) {
             this.activity = (Activity) context;
+        } else {
+            return false;
+        }
+
+        this.managed = managed;
+
+        if (managed instanceof Activity) {
+            return true;
+        }
+
+        if (managed instanceof Fragment) {
+            return true;
+        }
+
+        if (managed instanceof android.app.Fragment) {
             return true;
         }
 
@@ -72,12 +83,9 @@ public class IntentExtraInjector implements Injector
      * In this method, the injector can injects field and call callbacks
      * (however, callbacks may wait the validate call).
      *
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
      */
 
     @Override
@@ -103,10 +111,8 @@ public class IntentExtraInjector implements Injector
      * called on valid injector only.
      * In this method, the injector can free resources
      *
-     * @param context
-     *            the android context
-     * @param managed
-     *            the managed instance
+     * @param context the android context
+     * @param managed the managed instance
      */
     @Override
     public void stop(Context context, Object managed) {
@@ -157,86 +163,63 @@ public class IntentExtraInjector implements Injector
         try {
             if (String.class.isAssignableFrom(type)) {
                 extra = intent.getStringExtra(value);
-            }
-            else if (ArrayList.class.isAssignableFrom(type)) {
+            } else if (ArrayList.class.isAssignableFrom(type)) {
                 extra = intent.getStringArrayListExtra(value);
                 if (extra == null) {
                     extra = intent.getParcelableArrayListExtra(value);
                 }
-            }
-            else if (boolean.class.isAssignableFrom(type) || Boolean.class.isAssignableFrom(type)) {
+            } else if (boolean.class.isAssignableFrom(type) || Boolean.class.isAssignableFrom(type)) {
                 extra = intent.getBooleanExtra(value, false);
-            }
-            else if (Bundle.class.isAssignableFrom(type)) {
+            } else if (Bundle.class.isAssignableFrom(type)) {
                 extra = intent.getBundleExtra(value);
-            }
-            else if (byte.class.isAssignableFrom(type) || Byte.class.isAssignableFrom(type)) {
+            } else if (byte.class.isAssignableFrom(type) || Byte.class.isAssignableFrom(type)) {
                 extra = intent.getByteExtra(value, (byte) 0);
-            }
-            else if (char.class.isAssignableFrom(type) || Character.class.isAssignableFrom(type)) {
+            } else if (char.class.isAssignableFrom(type) || Character.class.isAssignableFrom(type)) {
                 extra = intent.getCharExtra(value, (char) 0);
-            }
-            else if (CharSequence.class.isAssignableFrom(type)) {
+            } else if (CharSequence.class.isAssignableFrom(type)) {
                 extra = intent.getCharSequenceExtra(value);
-            }
-            else if (double.class.isAssignableFrom(type) || Double.class.isAssignableFrom(type)) {
+            } else if (double.class.isAssignableFrom(type) || Double.class.isAssignableFrom(type)) {
                 extra = intent.getDoubleExtra(value, 0d);
-            }
-            else if (float.class.isAssignableFrom(type) || Float.class.isAssignableFrom(type)) {
+            } else if (float.class.isAssignableFrom(type) || Float.class.isAssignableFrom(type)) {
                 extra = intent.getFloatExtra(value, 0f);
-            }
-            else if (int.class.isAssignableFrom(type) || Integer.class.isAssignableFrom(type)) {
+            } else if (int.class.isAssignableFrom(type) || Integer.class.isAssignableFrom(type)) {
                 extra = intent.getIntExtra(value, 0);
-            }
-            else if (long.class.isAssignableFrom(type) || Long.class.isAssignableFrom(type)) {
+            } else if (long.class.isAssignableFrom(type) || Long.class.isAssignableFrom(type)) {
                 extra = intent.getLongExtra(value, 0l);
-            }
-            else if (Parcelable.class.isAssignableFrom(type)) {
+            } else if (Parcelable.class.isAssignableFrom(type)) {
                 extra = intent.getParcelableExtra(value);
-            }
-            else if (Serializable.class.isAssignableFrom(type)) {
+            } else if (Serializable.class.isAssignableFrom(type)) {
                 extra = intent.getSerializableExtra(value);
-            }
-            else if (short.class.isAssignableFrom(type) || Short.class.isAssignableFrom(type)) {
+            } else if (short.class.isAssignableFrom(type) || Short.class.isAssignableFrom(type)) {
                 extra = intent.getShortExtra(value, (short) 0);
-            }
-            else if (type.isArray()) {
+            } else if (type.isArray()) {
                 Class<?> componentType = type.getComponentType();
                 if (String.class.isAssignableFrom(componentType)) {
                     extra = intent.getStringArrayExtra(value);
-                }
-                else if (Parcelable.class.isAssignableFrom(componentType)) {
+                } else if (Parcelable.class.isAssignableFrom(componentType)) {
                     extra = intent.getParcelableArrayExtra(value);
-                }
-                else if (boolean.class.isAssignableFrom(type)
+                } else if (boolean.class.isAssignableFrom(type)
                         || Boolean.class.isAssignableFrom(componentType)) {
                     extra = intent.getBooleanArrayExtra(value);
-                }
-                else if (byte.class.isAssignableFrom(type)
+                } else if (byte.class.isAssignableFrom(type)
                         || Byte.class.isAssignableFrom(componentType)) {
                     extra = intent.getByteArrayExtra(value);
-                }
-                else if (char.class.isAssignableFrom(type)
+                } else if (char.class.isAssignableFrom(type)
                         || Character.class.isAssignableFrom(componentType)) {
                     extra = intent.getCharArrayExtra(value);
-                }
-                else if (double.class.isAssignableFrom(type)
+                } else if (double.class.isAssignableFrom(type)
                         || Double.class.isAssignableFrom(componentType)) {
                     extra = intent.getDoubleArrayExtra(value);
-                }
-                else if (float.class.isAssignableFrom(type)
+                } else if (float.class.isAssignableFrom(type)
                         || Float.class.isAssignableFrom(componentType)) {
                     extra = intent.getFloatArrayExtra(value);
-                }
-                else if (int.class.isAssignableFrom(type)
+                } else if (int.class.isAssignableFrom(type)
                         || Integer.class.isAssignableFrom(componentType)) {
                     extra = intent.getIntArrayExtra(value);
-                }
-                else if (long.class.isAssignableFrom(type)
+                } else if (long.class.isAssignableFrom(type)
                         || Long.class.isAssignableFrom(componentType)) {
                     extra = intent.getLongArrayExtra(value);
-                }
-                else if (short.class.isAssignableFrom(type)
+                } else if (short.class.isAssignableFrom(type)
                         || Short.class.isAssignableFrom(componentType)) {
                     extra = intent.getShortArrayExtra(value);
                 }
@@ -249,17 +232,15 @@ public class IntentExtraInjector implements Injector
                         + " No such extra could be found.";
                 if (annotation.mandatory()) {
                     throw new RuntimeException(message);
-                }
-                else {
+                } else {
                     // Log.i(getClass().getCanonicalName(), message);
                     return;
                 }
             }
 
             field.setAccessible(true);
-            field.set(activity, extra);
-        }
-        catch (Exception e) {
+            field.set(managed, extra);
+        } catch (Exception e) {
             throw new RuntimeException("Could not inject a suitable extra"
                     + " for field " + field.getName() + "of instance of type "
                     + field.getDeclaringClass().getCanonicalName(), e);

@@ -12,31 +12,26 @@ This file may be used under the terms of the GNU General Public License version 
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
 
 */
-package de.akquinet.android.robojecttest.activities;
+package de.akquinet.android.robojecttest.fragments;
 
 import android.os.Bundle;
-import de.akquinet.android.roboject.RobojectActivity;
-import de.akquinet.android.roboject.ServiceRegistry;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import de.akquinet.android.roboject.RobojectFragment;
 import de.akquinet.android.roboject.annotations.InjectService;
-import de.akquinet.android.robojecttest.services.AdderImplementation;
+import de.akquinet.android.robojecttest.R;
+import de.akquinet.android.robojecttest.services.IRemoteService;
+import de.akquinet.android.robojecttest.services.RemoteTestService;
 
-public class InjectNonAndroidServiceTestActivity extends RobojectActivity {
-    static {
-        ServiceRegistry.registerService(AdderInterface.class, AdderImplementation.class);
-    }
 
-    @InjectService
-    public AdderInterface adder1;
-
-    public AdderInterface adder2;
+public class InjectRemoteServiceTestFragment extends RobojectFragment {
+    @InjectService(clazz = RemoteTestService.class)
+    public IRemoteService adderService;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        adder2 = ServiceRegistry.getService(AdderInterface.class);
-    }
-
-    public interface AdderInterface {
-        int add(int... params);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View inflate = inflater.inflate(R.layout.viewinject, container, false);
+        return inflate;
     }
 }

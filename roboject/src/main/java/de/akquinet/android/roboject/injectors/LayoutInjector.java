@@ -2,6 +2,7 @@ package de.akquinet.android.roboject.injectors;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectLayout;
@@ -12,6 +13,7 @@ import de.akquinet.android.roboject.util.ReflectionUtil;
 public class LayoutInjector implements Injector {
     private Activity activity;
     private InjectorState state = InjectorState.CREATED;
+    private Object managed;
 
     /**
      * Method called by the container to initialize the container.
@@ -30,8 +32,23 @@ public class LayoutInjector implements Injector {
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
             throws RobojectException {
-        if (managed instanceof Activity) {
+        if (context instanceof Activity) {
             this.activity = (Activity) context;
+        } else {
+            return false;
+        }
+
+        this.managed = managed;
+
+        if (managed instanceof Activity) {
+            return true;
+        }
+
+        if (managed instanceof Fragment) {
+            return true;
+        }
+
+        if (managed instanceof android.app.Fragment) {
             return true;
         }
 
@@ -106,10 +123,16 @@ public class LayoutInjector implements Injector {
 
     @Override
     public void onCreate() {
-        InjectLayout layoutAnnotation = ReflectionUtil.getAnnotation(activity.getClass(), InjectLayout.class);
+        InjectLayout layoutAnnotation = ReflectionUtil.getAnnotation(managed.getClass(), InjectLayout.class);
         if (layoutAnnotation != null) {
             int id = AndroidUtil.getIdentifierFromR(activity, "layout", layoutAnnotation.value());
-            activity.setContentView(id);
+
+            if (managed instanceof Activity) {
+                ((Activity) managed).setContentView(id);
+            }
+
+            if (managed instanceof Fragment || managed instanceof android.app.Fragment)
+                throw new RuntimeException("Layout injection not Implemented for fragments.");
         }
     }
 

@@ -14,13 +14,13 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.robojecttest;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
 import de.akquinet.android.marvin.ActivityTestCase;
 import de.akquinet.android.robojecttest.activities.InjectViewTestActivity;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
 
-public class InjectViewTest extends ActivityTestCase<InjectViewTestActivity>
-{
+
+public class InjectViewTest extends ActivityTestCase<InjectViewTestActivity> {
     public InjectViewTest() {
         super(InjectViewTestActivity.class);
     }

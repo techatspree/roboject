@@ -12,17 +12,21 @@ This file may be used under the terms of the GNU General Public License version 
 If you are unsure which license is appropriate for your use, please contact the sales department at http://www.akquinet.de/en.
 
 */
-package de.akquinet.android.robojecttest.activities;
+package de.akquinet.android.robojecttest.fragments;
 
 import android.os.Bundle;
-import de.akquinet.android.roboject.RobojectActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import de.akquinet.android.roboject.RobojectSupportFragment;
 import de.akquinet.android.roboject.ServiceRegistry;
 import de.akquinet.android.roboject.annotations.InjectService;
-import de.akquinet.android.robojecttest.services.AdderImplementation;
+import de.akquinet.android.robojecttest.R;
+import de.akquinet.android.robojecttest.services.AdderSupportFragmentImplementation;
 
-public class InjectNonAndroidServiceTestActivity extends RobojectActivity {
+public class InjectNonAndroidServiceTestSupportFragment extends RobojectSupportFragment {
     static {
-        ServiceRegistry.registerService(AdderInterface.class, AdderImplementation.class);
+        ServiceRegistry.registerService(AdderInterface.class, AdderSupportFragmentImplementation.class);
     }
 
     @InjectService
@@ -31,9 +35,15 @@ public class InjectNonAndroidServiceTestActivity extends RobojectActivity {
     public AdderInterface adder2;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adder2 = ServiceRegistry.getService(AdderInterface.class);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View inflate = inflater.inflate(R.layout.viewinject, container, false);
+        return inflate;
     }
 
     public interface AdderInterface {

@@ -36,7 +36,7 @@ public class ViewInjector implements Injector {
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
             throws RobojectException {
-        
+
         if (context instanceof Activity) {
             this.activity = (Activity) context;
         } else {
@@ -128,7 +128,6 @@ public class ViewInjector implements Injector {
                 : AndroidUtil.getIdentifierFromR(activity, "id", value);
         try {
             View view = activity.findViewById(id);
-//            View view = activity.getLayoutInflater().inflate(id, null, false);
             field.setAccessible(true);
             field.set(managed, view);
         } catch (Exception e) {

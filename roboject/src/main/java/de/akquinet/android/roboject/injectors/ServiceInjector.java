@@ -14,6 +14,7 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.roboject.injectors;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,6 +22,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
@@ -60,9 +62,22 @@ public class ServiceInjector implements Injector {
     public boolean configure(Context context, Container container,
                              Object managed, Class<?> clazz) throws RobojectException {
         this.context = context;
-        this.container = container;
         this.managed = managed;
-        return true;
+        this.container = container;
+
+        if (managed instanceof Activity) {
+            return true;
+        }
+
+        if (managed instanceof Fragment) {
+            return true;
+        }
+
+        if (managed instanceof android.app.Fragment) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

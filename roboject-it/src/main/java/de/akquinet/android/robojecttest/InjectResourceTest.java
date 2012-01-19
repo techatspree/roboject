@@ -16,13 +16,11 @@ package de.akquinet.android.robojecttest;
 
 import de.akquinet.android.marvin.ActivityTestCase;
 import de.akquinet.android.robojecttest.activities.InjectResourceTestActivity;
-import de.akquinet.android.robojecttest.activities.InjectViewTestActivity;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 
-public class InjectResourceTest extends ActivityTestCase<InjectResourceTestActivity>
-{
+public class InjectResourceTest extends ActivityTestCase<InjectResourceTestActivity> {
     public InjectResourceTest() {
         super(InjectResourceTestActivity.class);
     }

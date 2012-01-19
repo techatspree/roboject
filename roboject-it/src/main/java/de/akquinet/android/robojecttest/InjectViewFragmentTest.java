@@ -16,9 +16,7 @@ package de.akquinet.android.robojecttest;
 
 import de.akquinet.android.marvin.ActivityTestCase;
 import de.akquinet.android.robojecttest.activities.DummyFragmentActivity;
-import de.akquinet.android.robojecttest.activities.DummySupportFragmentActivity;
 import de.akquinet.android.robojecttest.fragments.InjectViewTestFragment;
-import de.akquinet.android.robojecttest.fragments.InjectViewTestSupportFragment;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 

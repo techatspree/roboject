@@ -14,21 +14,16 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.robojecttest.activities;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import de.akquinet.android.roboject.RobojectActivity;
 import de.akquinet.android.roboject.RobojectFragmentActivity;
 import de.akquinet.android.roboject.annotations.InjectView;
 import de.akquinet.android.robojecttest.R;
 
 
-public class InjectViewTestFragmentActivity extends RobojectFragmentActivity
-{
+public class InjectViewTestFragmentActivity extends RobojectFragmentActivity {
     @InjectView
     public TextView theTextView;
 

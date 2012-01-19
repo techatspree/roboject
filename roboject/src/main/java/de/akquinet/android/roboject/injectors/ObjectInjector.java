@@ -14,10 +14,6 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.roboject.injectors;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -25,6 +21,10 @@ import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectObject;
 import de.akquinet.android.roboject.util.ReflectionUtil;
+
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 
 import static de.akquinet.android.roboject.util.IntentRegistry.getObjectIntentExtras;
 import static de.akquinet.android.roboject.util.IntentRegistry.putObjectIntentExtras;
@@ -52,14 +52,23 @@ public class ObjectInjector implements Injector {
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
             throws RobojectException {
-        this.activity = (Activity) context;
+        if (context instanceof Activity) {
+            this.activity = (Activity) context;
+        } else {
+            return false;
+        }
+
         this.managed = managed;
-        
+
         if (managed instanceof Activity) {
             return true;
         }
 
         if (managed instanceof Fragment) {
+            return true;
+        }
+
+        if (managed instanceof android.app.Fragment) {
             return true;
         }
 

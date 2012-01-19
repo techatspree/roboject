@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- A Layout with some views -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+              android:orientation="vertical" android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
 
     <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectViewTestSupportFragment"
-                android:id="@+id/viewSupportFragment"
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+              android:id="@+id/viewSupportFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
     <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectResourceTestSupportFragment"
-                android:id="@+id/resourceSupportFragment"
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+              android:id="@+id/resourceSupportFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
     <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectServiceTestSupportFragment"
-                android:id="@+id/serviceSupportFragment"
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+              android:id="@+id/serviceSupportFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
+    <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectRemoteServiceTestSupportFragment"
+              android:id="@+id/remoteServiceSupportFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
+    <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectNonAndroidServiceTestSupportFragment"
+              android:id="@+id/nonAndroidServiceSupportFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
+
 
 </LinearLayout>

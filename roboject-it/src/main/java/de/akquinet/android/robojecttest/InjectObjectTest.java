@@ -14,18 +14,17 @@ If you are unsure which license is appropriate for your use, please contact the 
  */
 package de.akquinet.android.robojecttest;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-
-import java.util.concurrent.TimeUnit;
-
 import de.akquinet.android.marvin.ActivityTestCase;
 import de.akquinet.android.robojecttest.activities.InjectObjectTestActivityA;
 import de.akquinet.android.robojecttest.activities.InjectObjectTestActivityB;
 
+import java.util.concurrent.TimeUnit;
 
-public class InjectObjectTest extends ActivityTestCase<InjectObjectTestActivityA>
-{
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+
+
+public class InjectObjectTest extends ActivityTestCase<InjectObjectTestActivityA> {
     public InjectObjectTest() {
         super(InjectObjectTestActivityA.class);
     }

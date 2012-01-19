@@ -19,33 +19,26 @@ import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 
 
-public interface Injector
-{
-    enum InjectorState
-    {
+public interface Injector {
+    enum InjectorState {
         CREATED, STARTED, READY
     }
 
     /**
      * Method called by the container to initialize the container.
      *
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
-     * @param clazz
-     *            the managed class (the class of <tt>managed</tt>)
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
+     * @param clazz     the managed class (the class of <tt>managed</tt>)
      * @return <code>true</code> if the injector wants to contribute to the
      *         management of the instance, <code>false</code> otherwise. In this
      *         latter case, the injector will be
      *         ignored for this instance.
-     * @throws RobojectException
-     *             if the configuration failed.
+     * @throws RobojectException if the configuration failed.
      */
     boolean configure(Context context, Container container, Object managed,
-            Class<?> clazz) throws RobojectException;
+                      Class<?> clazz) throws RobojectException;
 
     /**
      * Method called by the container when all injectors are configured
@@ -55,12 +48,9 @@ public interface Injector
      * (however,
      * callbacks may wait the validate call).
      *
-     * @param context
-     *            the android context
-     * @param container
-     *            the roboject container
-     * @param managed
-     *            the managed instance
+     * @param context   the android context
+     * @param container the roboject container
+     * @param managed   the managed instance
      */
     void start(Context context, Container container, Object managed);
 
@@ -78,10 +68,8 @@ public interface Injector
      * called on valid injector only.
      * In this method, the injector can free resources
      *
-     * @param context
-     *            the android context
-     * @param managed
-     *            the managed instance
+     * @param context the android context
+     * @param managed the managed instance
      */
     void stop(Context context, Object managed);
 

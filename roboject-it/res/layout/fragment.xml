@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- A Layout with some views -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+              android:orientation="vertical" android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
 
     <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectViewTestFragment"
-                android:id="@+id/viewFragment"
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+              android:id="@+id/viewFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
+    <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectResourceTestFragment"
+              android:id="@+id/resourceFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
+    <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectServiceTestFragment"
+              android:id="@+id/serviceFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
+    <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectRemoteServiceTestFragment"
+              android:id="@+id/remoteServiceFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
+    <fragment android:name="de.akquinet.android.robojecttest.fragments.InjectNonAndroidServiceTestFragment"
+              android:id="@+id/nonAndroidServiceFragment"
+              android:layout_weight="1"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"/>
+
 
 </LinearLayout>

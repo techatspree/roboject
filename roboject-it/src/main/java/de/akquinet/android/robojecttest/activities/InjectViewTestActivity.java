@@ -23,8 +23,7 @@ import de.akquinet.android.roboject.annotations.InjectView;
 import de.akquinet.android.robojecttest.R;
 
 
-public class InjectViewTestActivity extends RobojectActivity
-{
+public class InjectViewTestActivity extends RobojectActivity {
     @InjectView
     public TextView theTextView;
 
@@ -45,7 +44,7 @@ public class InjectViewTestActivity extends RobojectActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.viewinject);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.viewinject);
     }
 }

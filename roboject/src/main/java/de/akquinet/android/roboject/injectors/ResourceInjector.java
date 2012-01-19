@@ -1,8 +1,5 @@
 package de.akquinet.android.roboject.injectors;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -11,6 +8,9 @@ import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectResource;
 import de.akquinet.android.roboject.util.AndroidUtil;
 import de.akquinet.android.roboject.util.ReflectionUtil;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 
 public class ResourceInjector implements Injector {
@@ -35,7 +35,12 @@ public class ResourceInjector implements Injector {
     @Override
     public boolean configure(Context context, Container container, Object managed, Class<?> clazz)
             throws RobojectException {
-        this.activity = (Activity) context;
+        if (context instanceof Activity) {
+            this.activity = (Activity) context;
+        } else {
+            return false;
+        }
+
         this.managed = managed;
 
         if (managed instanceof Activity) {
@@ -43,6 +48,10 @@ public class ResourceInjector implements Injector {
         }
 
         if (managed instanceof Fragment) {
+            return true;
+        }
+
+        if (managed instanceof android.app.Fragment) {
             return true;
         }
 

@@ -15,20 +15,26 @@ If you are unsure which license is appropriate for your use, please contact the 
 package de.akquinet.android.robojecttest;
 
 import de.akquinet.android.marvin.ActivityTestCase;
-import de.akquinet.android.robojecttest.activities.InjectRemoteServiceTestActivity;
+import de.akquinet.android.robojecttest.activities.DummyFragmentActivity;
+import de.akquinet.android.robojecttest.fragments.InjectNonAndroidServiceTestFragment;
 
 import static org.hamcrest.CoreMatchers.*;
 
 
-public class InjectRemoteServiceTest extends ActivityTestCase<InjectRemoteServiceTestActivity> {
-    public InjectRemoteServiceTest() {
-        super(InjectRemoteServiceTestActivity.class);
+public class InjectNonAndroidServiceFragmentTest extends ActivityTestCase<DummyFragmentActivity> {
+    public InjectNonAndroidServiceFragmentTest() {
+        super(DummyFragmentActivity.class);
     }
 
-    public void testInjectService() throws Exception {
+    public void testInjectLocalService() throws Exception {
         Thread.sleep(2000);
 
-        assertThat(getActivity().adderService, notNullValue());
-        assertThat(getActivity().adderService.add(2, 3), is(equalTo(5)));
+        InjectNonAndroidServiceTestFragment fragment = (InjectNonAndroidServiceTestFragment) getActivity().getFragmentManager().findFragmentById(R.id.nonAndroidServiceFragment);
+
+        assertThat(fragment.adder1, notNullValue());
+        assertThat(fragment.adder1.add(2, 3), is(equalTo(5)));
+
+        assertThat(fragment.adder2, notNullValue());
+        assertThat(fragment.adder2.add(2, 3), is(equalTo(5)));
     }
 }

@@ -14,12 +14,12 @@ If you are unsure which license is appropriate for your use, please contact the 
 */
 package de.akquinet.android.roboject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.injectors.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RobojectConfiguration {
@@ -40,17 +40,17 @@ public class RobojectConfiguration {
             result.add(new ServiceInjector());
             result.add(new ResourceInjector());
             // TODO: These should work fine but are not currently tested.
-//            result.add(new IntentExtraInjector());
-//            result.add(new ObjectInjector());
+            result.add(new IntentExtraInjector());
+            result.add(new ObjectInjector());
         }
 
         if (managed instanceof android.app.Fragment) {
             result.add(new ViewInjector());
+            result.add(new ServiceInjector());
+            result.add(new ResourceInjector());
             // TODO: These should work fine but are not currently tested.
-//            result.add(new ServiceInjector());
-//            result.add(new ResourceInjector());
-//            result.add(new IntentExtraInjector());
-//            result.add(new ObjectInjector());
+            result.add(new IntentExtraInjector());
+            result.add(new ObjectInjector());
         }
 
         return result;

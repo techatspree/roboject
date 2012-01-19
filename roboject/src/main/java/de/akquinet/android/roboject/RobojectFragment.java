@@ -32,7 +32,6 @@ public class RobojectFragment extends Fragment implements RobojectLifecycle, Ser
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         onSetContentView();
-        System.out.println();
     }
 
     /**
