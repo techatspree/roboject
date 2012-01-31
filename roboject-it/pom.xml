@@ -41,8 +41,6 @@ If you are unsure which license is appropriate for your use, please contact the 
             <groupId>android.support</groupId>
             <artifactId>compatibility-v4</artifactId>
             <version>r6</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/android-support-v4.jar</systemPath>
         </dependency>
     </dependencies>
 
