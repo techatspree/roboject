@@ -48,8 +48,12 @@ public class LayoutInjector implements Injector {
             return true;
         }
 
-        if (managed instanceof android.app.Fragment) {
-            return true;
+        try {
+            if (managed instanceof android.app.Fragment) {
+                return true;
+            }
+        } catch (NoClassDefFoundError e) {
+            // Runtime is a pre 4.0 environment
         }
 
         return false;
@@ -131,8 +135,12 @@ public class LayoutInjector implements Injector {
                 ((Activity) managed).setContentView(id);
             }
 
+            try {
             if (managed instanceof Fragment || managed instanceof android.app.Fragment)
                 throw new RuntimeException("Layout injection not Implemented for fragments.");
+            } catch (NoClassDefFoundError e) {
+                // Runtime is a pre 4.0 environment
+            }
         }
     }
 
