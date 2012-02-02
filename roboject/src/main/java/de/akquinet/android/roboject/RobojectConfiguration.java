@@ -44,13 +44,17 @@ public class RobojectConfiguration {
             result.add(new ObjectInjector());
         }
 
-        if (managed instanceof android.app.Fragment) {
-            result.add(new ViewInjector());
-            result.add(new ServiceInjector());
-            result.add(new ResourceInjector());
-            // TODO: These should work fine but are not currently tested.
-            result.add(new IntentExtraInjector());
-            result.add(new ObjectInjector());
+        try {
+            if (managed instanceof android.app.Fragment) {
+                result.add(new ViewInjector());
+                result.add(new ServiceInjector());
+                result.add(new ResourceInjector());
+                // TODO: These should work fine but are not currently tested.
+                result.add(new IntentExtraInjector());
+                result.add(new ObjectInjector());
+            }
+        } catch (NoClassDefFoundError e) {
+            // Runtime is a pre 4.0 environment
         }
 
         return result;

@@ -51,8 +51,12 @@ public class ResourceInjector implements Injector {
             return true;
         }
 
-        if (managed instanceof android.app.Fragment) {
-            return true;
+        try {
+            if (managed instanceof android.app.Fragment) {
+                return true;
+            }
+        } catch (NoClassDefFoundError e) {
+            // Runtime is a pre 4.0 environment
         }
 
         return false;
