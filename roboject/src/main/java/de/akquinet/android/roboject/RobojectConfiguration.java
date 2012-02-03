@@ -17,6 +17,7 @@ package de.akquinet.android.roboject;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.injectors.*;
+import de.akquinet.android.roboject.util.ReflectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class RobojectConfiguration {
             result.add(new ResourceInjector());
         }
 
-        if (managed instanceof Fragment) {
+        if (ReflectionUtil.doesClassExist("android.support.v4.app.Fragment") && managed instanceof Fragment) {
             result.add(new ViewInjector());
             result.add(new ServiceInjector());
             result.add(new ResourceInjector());
@@ -44,17 +45,13 @@ public class RobojectConfiguration {
             result.add(new ObjectInjector());
         }
 
-        try {
-            if (managed instanceof android.app.Fragment) {
-                result.add(new ViewInjector());
-                result.add(new ServiceInjector());
-                result.add(new ResourceInjector());
-                // TODO: These should work fine but are not currently tested.
-                result.add(new IntentExtraInjector());
-                result.add(new ObjectInjector());
-            }
-        } catch (NoClassDefFoundError e) {
-            // Runtime is a pre 4.0 environment
+        if (ReflectionUtil.doesClassExist("android.app.Fragment") && managed instanceof android.app.Fragment) {
+            result.add(new ViewInjector());
+            result.add(new ServiceInjector());
+            result.add(new ResourceInjector());
+            // TODO: These should work fine but are not currently tested.
+            result.add(new IntentExtraInjector());
+            result.add(new ObjectInjector());
         }
 
         return result;
