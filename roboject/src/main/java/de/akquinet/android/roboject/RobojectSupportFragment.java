@@ -102,18 +102,7 @@ public class RobojectSupportFragment extends Fragment implements RobojectLifecyc
     private void createContainer() {
         if (this.container == null) {
             try {
-                // Both the Android Support Library and ActionbarSherlock define
-                // getActivity() inside Fragment, but with different return types
-                // (FragmentActivity vs. Activity).
-                // That's why we call the method by reflection and cast the result to Activity.
-
-                Method getActivity = getClass().getMethod("getActivity", new Class[0]);
-                Object activity = getActivity.invoke(this, new Object[0]);
-                if (!(activity instanceof Activity)) {
-                    throw new RuntimeException("getActivity() returned null");
-                }
-
-                this.container = new Container((Activity) activity, this, getClass());
+                this.container = new Container(getActivity(), this, getClass());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

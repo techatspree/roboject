@@ -64,16 +64,12 @@ public class ObjectInjector implements Injector {
             return true;
         }
 
-        if (managed instanceof Fragment) {
+        if (ReflectionUtil.doesClassExist("android.support.v4.app.Fragment") && managed instanceof Fragment) {
             return true;
         }
 
-        try {
-            if (managed instanceof android.app.Fragment) {
-                return true;
-            }
-        } catch (NoClassDefFoundError e) {
-            // Runtime is a pre 4.0 environment
+        if (ReflectionUtil.doesClassExist("android.app.Fragment") && managed instanceof android.app.Fragment) {
+            return true;
         }
 
         return false;
