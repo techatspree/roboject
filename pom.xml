@@ -13,7 +13,7 @@
 
     <groupId>de.akquinet.android.roboject</groupId>
     <artifactId>roboject-project</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.2.3-rc1</version>
     <packaging>pom</packaging>
 
     <parent>
