@@ -1,3 +1,11 @@
+1.1.0
+-----
+    * Use strings for injection to support new Android SDK r14 and higher
+    * Fragment support
+    * Support use of non-serializable objects as intent extras
+    * Support for injecting services behind AIDL interfaces
+    * Support for non-android-service injection
+
 1.0.3
 -----
     * Deactivate all logging
