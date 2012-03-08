@@ -52,6 +52,7 @@ limitations under the License.
     
     <modules>
         <module>roboject</module>
+        <module>roboject-tutorial</module>
     </modules>
 
     <dependencies>
