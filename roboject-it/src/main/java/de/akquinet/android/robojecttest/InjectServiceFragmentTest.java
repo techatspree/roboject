@@ -20,22 +20,26 @@ limitations under the License.
 */
 package de.akquinet.android.robojecttest;
 
+import android.os.Build;
 import de.akquinet.android.marvin.ActivityTestCase;
+import de.akquinet.android.marvin.AndroidTestCase;
 import de.akquinet.android.robojecttest.activities.DummyFragmentActivity;
 import de.akquinet.android.robojecttest.fragments.InjectServiceTestFragment;
 
 import static org.hamcrest.CoreMatchers.*;
 
 
-public class InjectServiceFragmentTest extends ActivityTestCase<DummyFragmentActivity> {
-    public InjectServiceFragmentTest() {
-        super(DummyFragmentActivity.class);
-    }
-
+public class InjectServiceFragmentTest extends AndroidTestCase {
     public void testInjectService() throws Exception {
+        // skip test for pre Honeycomb devices
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+            return;
+
+        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+
         Thread.sleep(2000);
 
-        InjectServiceTestFragment fragment = (InjectServiceTestFragment) getActivity().getFragmentManager().findFragmentById(R.id.serviceFragment);
+        InjectServiceTestFragment fragment = (InjectServiceTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.serviceFragment);
 
         assertThat(fragment.adderService, notNullValue());
         assertThat(fragment.adderService.add(2, 3), is(equalTo(5)));

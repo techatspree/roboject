@@ -20,20 +20,24 @@ limitations under the License.
 */
 package de.akquinet.android.robojecttest;
 
+import android.os.Build;
 import de.akquinet.android.marvin.ActivityTestCase;
+import de.akquinet.android.marvin.AndroidTestCase;
 import de.akquinet.android.robojecttest.activities.DummyFragmentActivity;
 import de.akquinet.android.robojecttest.fragments.InjectResourceTestFragment;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 
-public class InjectResourceFragmentTest extends ActivityTestCase<DummyFragmentActivity> {
-    public InjectResourceFragmentTest() {
-        super(DummyFragmentActivity.class);
-    }
-
+public class InjectResourceFragmentTest extends AndroidTestCase {
     public void testInjectResourceByMemberName() {
-        InjectResourceTestFragment fragment = (InjectResourceTestFragment) getActivity().getFragmentManager().findFragmentById(R.id.resourceFragment);
+        // skip test for pre Honeycomb devices
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+            return;
+
+        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+
+        InjectResourceTestFragment fragment = (InjectResourceTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.resourceFragment);
 
         assertThat(fragment.theString, notNullValue());
         assertThat(fragment.thecolorlist, notNullValue());
@@ -46,7 +50,13 @@ public class InjectResourceFragmentTest extends ActivityTestCase<DummyFragmentAc
     }
 
     public void testInjectResourceById() {
-        InjectResourceTestFragment fragment = (InjectResourceTestFragment) getActivity().getFragmentManager().findFragmentById(R.id.resourceFragment);
+        // skip test for pre Honeycomb devices
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+            return;
+
+        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+
+        InjectResourceTestFragment fragment = (InjectResourceTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.resourceFragment);
 
         assertThat(fragment.theColor, notNullValue());
     }
