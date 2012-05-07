@@ -2,12 +2,13 @@ package de.akquinet.android.roboject.injectors;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectLayout;
 import de.akquinet.android.roboject.util.AndroidUtil;
 import de.akquinet.android.roboject.util.ReflectionUtil;
+
+import static de.akquinet.android.roboject.util.ReflectionUtil.isObjectInstanceof;
 
 
 public class LayoutInjector implements Injector {
@@ -44,11 +45,11 @@ public class LayoutInjector implements Injector {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.support.v4.app.Fragment") && managed instanceof Fragment) {
+        if (isObjectInstanceof(managed, "android.support.v4.app.Fragment")) {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.app.Fragment") && managed instanceof android.app.Fragment) {
+        if (isObjectInstanceof(managed, "android.app.Fragment")) {
             return true;
         }
 
@@ -129,13 +130,6 @@ public class LayoutInjector implements Injector {
 
             if (managed instanceof Activity) {
                 ((Activity) managed).setContentView(id);
-            }
-
-            try {
-            if (managed instanceof Fragment || managed instanceof android.app.Fragment)
-                throw new RuntimeException("Layout injection not Implemented for fragments.");
-            } catch (NoClassDefFoundError e) {
-                // Runtime is a pre 4.0 environment
             }
         }
     }

@@ -20,13 +20,13 @@ limitations under the License.
 */
 package de.akquinet.android.roboject.util;
 
+import android.app.Activity;
+import android.app.Service;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.app.Activity;
-import android.app.Service;
 
 
 /**
@@ -35,10 +35,14 @@ import android.app.Service;
  * @author Philipp Kumar
  */
 public class ReflectionUtil {
-    public static boolean doesClassExist(String className) {
+
+    public static boolean isObjectInstanceof(Object object, String classname) {
+        if (object == null)
+            return false;
+
         try {
-            Class.forName(className);
-            return true;
+            Class<?> aClass = Class.forName(classname);
+            return aClass.isAssignableFrom(object.getClass());
         } catch (ClassNotFoundException e) {
             return false;
         }

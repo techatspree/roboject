@@ -21,15 +21,16 @@ limitations under the License.
 package de.akquinet.android.roboject;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.injectors.*;
-import de.akquinet.android.roboject.util.ReflectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static de.akquinet.android.roboject.util.ReflectionUtil.isObjectInstanceof;
+
 
 public class RobojectConfiguration {
+
     public static List<Injector> getDefaultInjectors(Object managed) {
         List<Injector> result = new ArrayList<Injector>();
 
@@ -42,7 +43,7 @@ public class RobojectConfiguration {
             result.add(new ResourceInjector());
         }
 
-        if (ReflectionUtil.doesClassExist("android.support.v4.app.Fragment") && managed instanceof Fragment) {
+        if (isObjectInstanceof(managed, "android.support.v4.app.Fragment")) {
             result.add(new ViewInjector());
             result.add(new ServiceInjector());
             result.add(new ResourceInjector());
@@ -51,7 +52,7 @@ public class RobojectConfiguration {
             result.add(new ObjectInjector());
         }
 
-        if (ReflectionUtil.doesClassExist("android.app.Fragment") && managed instanceof android.app.Fragment) {
+        if (isObjectInstanceof(managed, "android.app.Fragment")) {
             result.add(new ViewInjector());
             result.add(new ServiceInjector());
             result.add(new ResourceInjector());

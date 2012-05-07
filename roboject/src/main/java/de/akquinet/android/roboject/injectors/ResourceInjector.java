@@ -2,7 +2,6 @@ package de.akquinet.android.roboject.injectors;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectResource;
@@ -11,6 +10,8 @@ import de.akquinet.android.roboject.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
 import java.util.List;
+
+import static de.akquinet.android.roboject.util.ReflectionUtil.isObjectInstanceof;
 
 
 public class ResourceInjector implements Injector {
@@ -47,11 +48,11 @@ public class ResourceInjector implements Injector {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.support.v4.app.Fragment") && managed instanceof Fragment) {
+        if (isObjectInstanceof(managed, "android.support.v4.app.Fragment")) {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.app.Fragment") && managed instanceof android.app.Fragment) {
+        if (isObjectInstanceof(managed, "android.app.Fragment")) {
             return true;
         }
 

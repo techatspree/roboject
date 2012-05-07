@@ -15,7 +15,12 @@
         <activity android:name=".activities.InjectObjectTestActivityB"></activity>
         <activity android:name=".activities.InjectResourceTestActivity"></activity>
         <activity android:name=".activities.InjectViewTestFragmentActivity"></activity>
-        <activity android:name=".activities.DummyFragmentActivity"></activity>
+        <activity android:name=".activities.DummyFragmentActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.DummySupportFragmentActivity"></activity>
     </application>
 

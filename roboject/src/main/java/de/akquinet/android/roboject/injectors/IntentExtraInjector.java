@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectExtra;
@@ -36,6 +35,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import static de.akquinet.android.roboject.util.ReflectionUtil.isObjectInstanceof;
 
 
 public class IntentExtraInjector implements Injector {
@@ -71,11 +72,11 @@ public class IntentExtraInjector implements Injector {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.support.v4.app.Fragment") && managed instanceof Fragment) {
+        if (isObjectInstanceof(managed, "android.support.v4.app.Fragment")) {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.app.Fragment") && managed instanceof android.app.Fragment) {
+        if (isObjectInstanceof(managed, "android.app.Fragment")) {
           return true;
         }
 

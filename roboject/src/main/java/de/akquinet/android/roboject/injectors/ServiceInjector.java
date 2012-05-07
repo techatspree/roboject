@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
@@ -39,6 +38,8 @@ import de.akquinet.android.roboject.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
 import java.util.*;
+
+import static de.akquinet.android.roboject.util.ReflectionUtil.isObjectInstanceof;
 
 
 public class ServiceInjector implements Injector {
@@ -75,11 +76,11 @@ public class ServiceInjector implements Injector {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.support.v4.app.Fragment") && managed instanceof Fragment) {
+        if (isObjectInstanceof(managed, "android.support.v4.app.Fragment")) {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.app.Fragment") && managed instanceof android.app.Fragment) {
+        if (isObjectInstanceof(managed, "android.app.Fragment")) {
             return true;
         }
 

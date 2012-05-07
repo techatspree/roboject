@@ -22,7 +22,6 @@ package de.akquinet.android.roboject.injectors;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import de.akquinet.android.roboject.Container;
 import de.akquinet.android.roboject.RobojectException;
 import de.akquinet.android.roboject.annotations.InjectObject;
@@ -34,6 +33,7 @@ import java.util.Map;
 
 import static de.akquinet.android.roboject.util.IntentRegistry.getObjectIntentExtras;
 import static de.akquinet.android.roboject.util.IntentRegistry.putObjectIntentExtras;
+import static de.akquinet.android.roboject.util.ReflectionUtil.isObjectInstanceof;
 
 public class ObjectInjector implements Injector {
 
@@ -70,11 +70,11 @@ public class ObjectInjector implements Injector {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.support.v4.app.Fragment") && managed instanceof Fragment) {
+        if (isObjectInstanceof(managed, "android.support.v4.app.Fragment")) {
             return true;
         }
 
-        if (ReflectionUtil.doesClassExist("android.app.Fragment") && managed instanceof android.app.Fragment) {
+        if (isObjectInstanceof(managed, "android.app.Fragment")) {
             return true;
         }
 
