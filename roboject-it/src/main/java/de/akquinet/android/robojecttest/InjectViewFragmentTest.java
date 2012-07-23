@@ -20,20 +20,24 @@ limitations under the License.
 */
 package de.akquinet.android.robojecttest;
 
+import android.os.Build;
 import de.akquinet.android.marvin.ActivityTestCase;
+import de.akquinet.android.marvin.AndroidTestCase;
 import de.akquinet.android.robojecttest.activities.DummyFragmentActivity;
 import de.akquinet.android.robojecttest.fragments.InjectViewTestFragment;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 
-public class InjectViewFragmentTest extends ActivityTestCase<DummyFragmentActivity> {
-    public InjectViewFragmentTest() {
-        super(DummyFragmentActivity.class);
-    }
-
+public class InjectViewFragmentTest extends AndroidTestCase {
     public void testInjectViewsByMemberName() {
-        InjectViewTestFragment fragment = (InjectViewTestFragment) getActivity().getFragmentManager().findFragmentById(R.id.viewFragment);
+        // skip test for pre Honeycomb devices
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+            return;
+
+        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+
+        InjectViewTestFragment fragment = (InjectViewTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.viewFragment);
 
         assertThat(fragment.theTextView, notNullValue());
         assertThat(fragment.theImageView, notNullValue());
@@ -41,7 +45,13 @@ public class InjectViewFragmentTest extends ActivityTestCase<DummyFragmentActivi
     }
 
     public void testInjectViewsById() {
-        InjectViewTestFragment fragment = (InjectViewTestFragment) getActivity().getFragmentManager().findFragmentById(R.id.viewFragment);
+        // skip test for pre Honeycomb devices
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+            return;
+
+        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+
+        InjectViewTestFragment fragment = (InjectViewTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.viewFragment);
 
         assertThat(fragment.theTextViewExplicitId, notNullValue());
         assertThat(fragment.theImageViewExplicitId, notNullValue());
