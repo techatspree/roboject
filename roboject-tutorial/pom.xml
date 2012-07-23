@@ -38,11 +38,9 @@ If you are unsure which license is appropriate for your use, please contact the 
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.3.0</version>
                 <configuration>
-                    <sdk>
-                        <platform>4</platform>
-                    </sdk>
+                    <testSkip>false</testSkip>
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
                     <extractDuplicates>true</extractDuplicates>
                 </configuration>
