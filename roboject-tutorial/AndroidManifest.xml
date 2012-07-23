@@ -21,7 +21,7 @@
 
     <uses-sdk android:minSdkVersion="4" />
 
-    <instrumentation android:targetPackage="de.akquinet.android.robojecttutorial"
+    <instrumentation android:targetPackage="de.akquinet.android.roboject.tutorial"
         android:name="android.test.InstrumentationTestRunner" />
 
 </manifest>

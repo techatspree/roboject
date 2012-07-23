@@ -31,6 +31,12 @@ If you are unsure which license is appropriate for your use, please contact the 
             <artifactId>roboject</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android-test</artifactId>
+            <version>2.3.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -40,7 +46,6 @@ If you are unsure which license is appropriate for your use, please contact the 
                 <artifactId>android-maven-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
-                    <testSkip>false</testSkip>
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
                     <extractDuplicates>true</extractDuplicates>
                 </configuration>
