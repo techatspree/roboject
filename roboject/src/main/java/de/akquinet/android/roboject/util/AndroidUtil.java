@@ -25,14 +25,10 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.graphics.Color;
 import android.graphics.Movie;
 import android.graphics.drawable.Drawable;
-import android.text.Layout;
-import android.view.Menu;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import junit.framework.Test;
 
 import java.lang.reflect.Field;
 
