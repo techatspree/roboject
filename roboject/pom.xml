@@ -25,7 +25,7 @@ limitations under the License.
     <parent>
         <groupId>de.akquinet.android.roboject</groupId>
         <artifactId>roboject-project</artifactId>
-        <version>1.2.1-SNAPSHOT</version>
+        <version>1.2.1</version>
     </parent>
 
     <artifactId>roboject</artifactId>
