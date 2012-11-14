@@ -22,30 +22,38 @@ package de.akquinet.android.roboject;
 
 import android.util.Log;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceRegistry {
     private static final String TAG = ServiceRegistry.class.getSimpleName();
-    private static Map<Class, Class> registry = new HashMap<Class, Class>();
+    private static Map<Class, Object> registry = new HashMap<Class, Object>();
 
-    public static <Type> void registerService(Class<Type> interfaceClass, Class<? extends Type> implementationClass) {
+    public static <T> void registerService(Class<T> interfaceClass, Object implementation) {
+        if (registry.get(interfaceClass) != null)
+            Log.w(TAG, "An implementation for service " + interfaceClass.toString() + " is already registered.");
+        registry.put(interfaceClass, implementation);
+    }
+
+    public static <T> void registerService(Class<T> interfaceClass, Class<? extends T> implementationClass) {
         if (registry.get(interfaceClass) != null)
             Log.w(TAG, "An implementation for service " + interfaceClass.toString() + " is already registered.");
         registry.put(interfaceClass, implementationClass);
     }
 
-    public static <Type> Type getService(Class<Type> interfaceClass) {
-        Class<? extends Type> implementationClass = registry.get(interfaceClass);
-        if (implementationClass != null) {
+    @SuppressWarnings("unchecked")
+    public static <T> T getService(Class<T> interfaceClass) {
+        Object implementation = registry.get(interfaceClass);
+        if (implementation == null)
+            return null;
+        else if (implementation instanceof Class<?>) {
+            Class<T> implementationClass = (Class<T>) implementation;
             try {
                 return implementationClass.newInstance();
             } catch (Exception e) {
                 throw new RuntimeException("Unable to create instance of " + implementationClass.toString(), e);
             }
-        }
-
-        return null;
+        } else
+            return (T) implementation;
     }
 }

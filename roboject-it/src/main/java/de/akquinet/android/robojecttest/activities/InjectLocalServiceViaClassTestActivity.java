@@ -25,8 +25,9 @@ import de.akquinet.android.roboject.RobojectActivity;
 import de.akquinet.android.roboject.ServiceRegistry;
 import de.akquinet.android.roboject.annotations.InjectService;
 import de.akquinet.android.robojecttest.services.AdderImplementation;
+import de.akquinet.android.robojecttest.services.AdderInterface;
 
-public class InjectNonAndroidServiceTestActivity extends RobojectActivity {
+public class InjectLocalServiceViaClassTestActivity extends RobojectActivity {
     static {
         ServiceRegistry.registerService(AdderInterface.class, AdderImplementation.class);
     }
@@ -40,9 +41,5 @@ public class InjectNonAndroidServiceTestActivity extends RobojectActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adder2 = ServiceRegistry.getService(AdderInterface.class);
-    }
-
-    public interface AdderInterface {
-        int add(int... params);
     }
 }

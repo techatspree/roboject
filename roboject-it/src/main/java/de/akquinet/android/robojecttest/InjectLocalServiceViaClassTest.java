@@ -21,26 +21,23 @@ limitations under the License.
 package de.akquinet.android.robojecttest;
 
 import de.akquinet.android.marvin.ActivityTestCase;
-import de.akquinet.android.robojecttest.activities.DummySupportFragmentActivity;
-import de.akquinet.android.robojecttest.fragments.InjectNonAndroidServiceTestSupportFragment;
+import de.akquinet.android.robojecttest.activities.InjectLocalServiceViaClassTestActivity;
 
 import static org.hamcrest.CoreMatchers.*;
 
 
-public class InjectNonAndroidServiceSupportFragmentTest extends ActivityTestCase<DummySupportFragmentActivity> {
-    public InjectNonAndroidServiceSupportFragmentTest() {
-        super(DummySupportFragmentActivity.class);
+public class InjectLocalServiceViaClassTest extends ActivityTestCase<InjectLocalServiceViaClassTestActivity> {
+    public InjectLocalServiceViaClassTest() {
+        super(InjectLocalServiceViaClassTestActivity.class);
     }
 
     public void testInjectLocalService() throws Exception {
         Thread.sleep(2000);
 
-        InjectNonAndroidServiceTestSupportFragment fragment = (InjectNonAndroidServiceTestSupportFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nonAndroidServiceSupportFragment);
+        assertThat(getActivity().adder1, notNullValue());
+        assertThat(getActivity().adder1.add(2, 3), is(equalTo(5)));
 
-        assertThat(fragment.adder1, notNullValue());
-        assertThat(fragment.adder1.add(2, 3), is(equalTo(5)));
-
-        assertThat(fragment.adder2, notNullValue());
-        assertThat(fragment.adder2.add(2, 3), is(equalTo(5)));
+        assertThat(getActivity().adder2, notNullValue());
+        assertThat(getActivity().adder2.add(2, 3), is(equalTo(5)));
     }
 }

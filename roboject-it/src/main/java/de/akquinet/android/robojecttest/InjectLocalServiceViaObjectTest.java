@@ -21,14 +21,14 @@ limitations under the License.
 package de.akquinet.android.robojecttest;
 
 import de.akquinet.android.marvin.ActivityTestCase;
-import de.akquinet.android.robojecttest.activities.InjectNonAndroidServiceTestActivity;
+import de.akquinet.android.robojecttest.activities.InjectLocalServiceViaObjectTestActivity;
 
 import static org.hamcrest.CoreMatchers.*;
 
 
-public class InjectNonAndroidServiceTest extends ActivityTestCase<InjectNonAndroidServiceTestActivity> {
-    public InjectNonAndroidServiceTest() {
-        super(InjectNonAndroidServiceTestActivity.class);
+public class InjectLocalServiceViaObjectTest extends ActivityTestCase<InjectLocalServiceViaObjectTestActivity> {
+    public InjectLocalServiceViaObjectTest() {
+        super(InjectLocalServiceViaObjectTestActivity.class);
     }
 
     public void testInjectLocalService() throws Exception {

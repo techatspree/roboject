@@ -29,7 +29,7 @@ import de.akquinet.android.robojecttest.fragments.InjectNonAndroidServiceTestFra
 import static org.hamcrest.CoreMatchers.*;
 
 
-public class InjectNonAndroidServiceFragmentTest extends AndroidTestCase {
+public class InjectLocalServiceFragmentTest extends AndroidTestCase {
     public void testInjectLocalService() throws Exception {
         // skip test for pre Honeycomb devices
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
