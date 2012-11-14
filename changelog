@@ -1,3 +1,7 @@
+1.2.1
+-----
+    * Added support for configuring objects as local services
+
 1.2.0
 -----
     * Changed license to Apache License 2.0
