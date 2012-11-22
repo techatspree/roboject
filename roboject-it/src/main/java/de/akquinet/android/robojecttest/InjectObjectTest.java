@@ -40,7 +40,7 @@ public class InjectObjectTest extends ActivityTestCase<InjectObjectTestActivityA
 
         getActivity().startSecondActivity(someInt);
         InjectObjectTestActivityB activityB =
-                waitForActivity(InjectObjectTestActivityB.class, 10, TimeUnit.SECONDS);
+                await().activity(InjectObjectTestActivityB.class, 10, TimeUnit.SECONDS);
 
         assertThat(activityB, notNullValue());
 
