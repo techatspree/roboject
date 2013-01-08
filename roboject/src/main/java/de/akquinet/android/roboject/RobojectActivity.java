@@ -80,10 +80,6 @@ public class RobojectActivity extends Activity
     public void onServicesConnected() {
     }
 
-    @Override
-    public void onReady() {
-    }
-
     /**
      * Attaches an arbitrary object to an {@link Intent}. This works like an
      * intent extra, but does not require the object to be serializable or

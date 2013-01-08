@@ -72,10 +72,6 @@ public class RobojectSupportFragment extends Fragment implements RobojectLifecyc
     public void onServicesConnected() {
     }
 
-    @Override
-    public void onReady() {
-    }
-
     /**
      * Attaches an arbitrary object to an {@link android.content.Intent}. This works like an
      * intent extra, but does not require the object to be serializable or

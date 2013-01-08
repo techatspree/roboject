@@ -26,7 +26,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
 import de.akquinet.android.roboject.Container;
@@ -266,21 +265,8 @@ public class ServiceInjector implements Injector {
     }
 
     private void done() {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... arg0) {
-                Log.v("ServiceInjector", "Invoking services connected life cycle");
-                invokeServicesConnectedLifeCycle();
-                return null;
-            }
-
-            protected void onPostExecute(Void result) {
-                state = InjectorState.READY;
-                container.update();
-            }
-
-            ;
-        }.execute();
+        invokeServicesConnectedLifeCycle();
+        state = InjectorState.READY;
     }
 
     @Override

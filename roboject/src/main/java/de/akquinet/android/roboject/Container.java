@@ -34,19 +34,15 @@ import java.util.Map;
 
 public class Container
 {
-    public enum LifeCyclePhase
-    {
-        CREATE, RESUME, STOP, SERVICES_CONNECTED, READY;
+    public enum LifeCyclePhase {
+        CREATE, RESUME, STOP, SERVICES_CONNECTED, READY
     }
 
     private LifeCyclePhase currentPhase;
 
     private List<Injector> injectors;
 
-    private Object managed;
-
     public Container(Context context, Object managed, Class<?> clazz) throws RobojectException {
-        this.managed = managed;
         this.currentPhase = LifeCyclePhase.CREATE;
         this.injectors = RobojectConfiguration.getDefaultInjectors(managed);
 
@@ -61,16 +57,6 @@ public class Container
         }
     }
 
-    public void update() {
-        if (this.currentPhase == LifeCyclePhase.READY) {
-            return;
-        }
-
-        if (allInjectorsReady()) {
-            invokeReadyPhase();
-        }
-    }
-    
     protected void invokeSetContentView() {
         for (Injector injector : this.injectors) {
             injector.onSetContentView();
@@ -101,13 +87,6 @@ public class Container
         }
     }
 
-    protected void invokeReadyPhase() {
-        this.currentPhase = LifeCyclePhase.READY;
-        if (managed instanceof RobojectLifecycle) {
-            ((RobojectLifecycle) managed).onReady();
-        }
-    }
-
     /**
      * Attaches an arbitrary object to an {@link Intent}. This works like an
      * intent extra, but does not require the object to be serializable or
@@ -127,16 +106,6 @@ public class Container
         }
 
         objectIntentExtras.put(key, value);
-    }
-
-    private boolean allInjectorsReady() {
-        for (Injector injector : injectors) {
-            if (!InjectorState.READY.equals(injector.getState())) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public LifeCyclePhase getCurrentLifecyclePhase() {
