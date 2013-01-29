@@ -118,6 +118,10 @@ public class ViewInjector implements Injector {
     public void invalidate() {
     }
 
+    private boolean isContentViewSet() {
+        return activity.findViewById(android.R.id.content) != null;
+    }
+
     /**
      * Inject a view to the given field, using the value of the given
      * annotation as view id. If the annotation has no value, then use the field
@@ -143,8 +147,7 @@ public class ViewInjector implements Injector {
         return this.state;
     }
 
-    @Override
-    public void onSetContentView() {
+    private void injectViews() {
         List<Field> fields = ReflectionUtil.getFields(managed.getClass());
         for (Field field : fields) {
             Annotation[] annotations = field.getAnnotations();
@@ -158,10 +161,14 @@ public class ViewInjector implements Injector {
 
     @Override
     public void onCreate() {
+        if (isContentViewSet())
+            injectViews();
     }
 
     @Override
     public void onResume() {
+        if (isContentViewSet())
+            injectViews();
     }
 
     @Override

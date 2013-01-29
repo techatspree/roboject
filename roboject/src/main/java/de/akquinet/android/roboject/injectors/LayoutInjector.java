@@ -119,10 +119,6 @@ public class LayoutInjector implements Injector {
     }
 
     @Override
-    public void onSetContentView() {
-    }
-
-    @Override
     public void onCreate() {
         InjectLayout layoutAnnotation = ReflectionUtil.getAnnotation(managed.getClass(), InjectLayout.class);
         if (layoutAnnotation != null) {

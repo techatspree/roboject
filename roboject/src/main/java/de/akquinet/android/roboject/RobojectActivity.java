@@ -38,7 +38,6 @@ public class RobojectActivity extends Activity
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        onSetContentView();
     }
 
     @Override
@@ -101,12 +100,6 @@ public class RobojectActivity extends Activity
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-    }
-
-    private void onSetContentView() {
-        createContainer();
-
-        this.container.invokeSetContentView();
     }
 
     private void createContainer() {

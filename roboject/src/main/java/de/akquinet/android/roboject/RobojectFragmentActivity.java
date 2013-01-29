@@ -36,12 +36,6 @@ public class RobojectFragmentActivity extends FragmentActivity
     private Container container;
 
     @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        onSetContentView();
-    }
-
-    @Override
     public void setContentView(View view, LayoutParams params) {
         super.setContentView(view, params);
     }
@@ -101,12 +95,6 @@ public class RobojectFragmentActivity extends FragmentActivity
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-    }
-
-    private void onSetContentView() {
-        createContainer();
-
-        this.container.invokeSetContentView();
     }
 
     private void createContainer() {

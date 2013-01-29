@@ -144,10 +144,6 @@ public class ObjectInjector implements Injector {
     }
 
     @Override
-    public void onSetContentView() {
-    }
-
-    @Override
     public void onCreate() {
         List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), InjectObject.class);
         for (Field field : fields) {

@@ -2,11 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="de.akquinet.android.robojecttest" android:versionCode="1" android:versionName="1.0">
 
     <application android:icon="@drawable/icon"
-        android:label="Roboject Tests" android:debuggable="true">
+        android:label="Roboject Tests" android:debuggable="true" android:name="de.akquinet.android.roboject.RobojectApplication">>
         <uses-library android:name="android.test.runner" />
         <service android:name=".services.TestService"></service>
         <service android:name=".services.RemoteTestService" android:process=":remote"></service>
-        <activity android:name=".activities.InjectViewTestActivity"></activity>
+        <activity android:name=".activities.InjectViewTestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.InjectLayoutTestActivity"></activity>
         <activity android:name=".activities.InjectServiceTestActivity"></activity>
         <activity android:name=".activities.InjectLocalServiceViaClassTestActivity"></activity>
@@ -16,12 +21,7 @@
         <activity android:name=".activities.InjectObjectTestActivityB"></activity>
         <activity android:name=".activities.InjectResourceTestActivity"></activity>
         <activity android:name=".activities.InjectViewTestFragmentActivity"></activity>
-        <activity android:name=".activities.DummyFragmentActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activities.DummyFragmentActivity"></activity>
         <activity android:name=".activities.DummySupportFragmentActivity"></activity>
     </application>
 

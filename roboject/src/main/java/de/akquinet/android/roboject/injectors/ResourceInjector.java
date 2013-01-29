@@ -116,6 +116,10 @@ public class ResourceInjector implements Injector {
     public void invalidate() {
     }
 
+    private boolean isContentViewSet() {
+        return activity.findViewById(android.R.id.content) != null;
+    }
+
     /**
      * Inject a resource to the given field, using the value of the given
      * annotation as resource id. If the annotation has no value, then use the field
@@ -144,8 +148,7 @@ public class ResourceInjector implements Injector {
         return this.state;
     }
 
-    @Override
-    public void onSetContentView() {
+    private void injectResources() {
         List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), InjectResource.class);
         for (Field field : fields) {
             InjectResource annotation = field.getAnnotation(InjectResource.class);
@@ -155,10 +158,14 @@ public class ResourceInjector implements Injector {
 
     @Override
     public void onCreate() {
+        if (isContentViewSet())
+            injectResources();
     }
 
     @Override
     public void onResume() {
+        if (isContentViewSet())
+            injectResources();
     }
 
     @Override

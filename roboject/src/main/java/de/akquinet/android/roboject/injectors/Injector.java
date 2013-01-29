@@ -60,8 +60,6 @@ public interface Injector {
      */
     void start(Context context, Container container, Object managed);
 
-    void onSetContentView();
-
     void onCreate();
 
     void onResume();

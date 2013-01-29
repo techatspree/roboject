@@ -270,10 +270,6 @@ public class ServiceInjector implements Injector {
     }
 
     @Override
-    public void onSetContentView() {
-    }
-
-    @Override
     public void onCreate() {
     }
 

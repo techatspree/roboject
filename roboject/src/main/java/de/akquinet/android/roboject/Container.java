@@ -57,12 +57,6 @@ public class Container
         }
     }
 
-    protected void invokeSetContentView() {
-        for (Injector injector : this.injectors) {
-            injector.onSetContentView();
-        }
-    }
-
     protected void invokeCreatePhase() {
         this.currentPhase = LifeCyclePhase.CREATE;
 

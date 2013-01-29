@@ -34,12 +34,6 @@ import java.lang.reflect.Method;
 public class RobojectFragment extends Fragment implements RobojectLifecycle, ServiceConnection {
     private Container container;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        onSetContentView();
-    }
-
     /**
      * Contract for subclasses: You need to call super before relying on
      * injections in {@link #onCreate(android.os.Bundle)}.
@@ -90,12 +84,6 @@ public class RobojectFragment extends Fragment implements RobojectLifecycle, Ser
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-    }
-
-    private void onSetContentView() {
-        createContainer();
-
-        this.container.invokeSetContentView();
     }
 
     private void createContainer() {

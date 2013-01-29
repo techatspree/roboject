@@ -260,10 +260,6 @@ public class IntentExtraInjector implements Injector {
     }
 
     @Override
-    public void onSetContentView() {
-    }
-
-    @Override
     public void onCreate() {
     }
 
