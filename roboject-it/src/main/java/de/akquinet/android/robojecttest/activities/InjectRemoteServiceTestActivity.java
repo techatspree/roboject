@@ -20,8 +20,6 @@ limitations under the License.
 */
 package de.akquinet.android.robojecttest.activities;
 
-import android.content.ComponentName;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 import de.akquinet.android.roboject.RobojectActivity;
@@ -35,12 +33,11 @@ public class InjectRemoteServiceTestActivity extends RobojectActivity {
     public IRemoteService adderService;
 
     @Override
-    public void onServiceConnected(ComponentName name, IBinder serviceObject) {
-        super.onServiceConnected(name, serviceObject);
+    public void onServicesConnected() {
+        super.onServicesConnected();
         try {
             Log.v("InjectRemoteServiceTestActivity", String.valueOf(adderService.add(22, 20)));
         } catch (RemoteException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 }
