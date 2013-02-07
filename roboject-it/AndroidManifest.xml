@@ -23,7 +23,7 @@
         <activity android:name=".activities.DummySupportFragmentActivity"></activity>
     </application>
 
-    <uses-sdk android:minSdkVersion="11" />
+    <uses-sdk android:minSdkVersion="4" />
 
     <instrumentation android:targetPackage="de.akquinet.android.robojecttest"
         android:name="android.test.InstrumentationTestRunner" />
