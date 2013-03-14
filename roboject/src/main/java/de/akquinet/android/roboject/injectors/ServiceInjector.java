@@ -36,9 +36,8 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 
-public class ServiceInjector implements Injector {
+public class ServiceInjector extends FieldInjector<InjectService> {
     private final Context context;
-    private final Object managed;
     private final ServicesConnector callback;
 
     private Map<Field, Boolean> fieldInjections = new HashMap<Field, Boolean>();
@@ -46,33 +45,82 @@ public class ServiceInjector implements Injector {
             Collections.synchronizedList(new ArrayList<ServiceConnection>());
 
     public ServiceInjector(Object managed, Context context, ServicesConnector callback) {
-        this.callback = callback;
-        this.managed = managed;
-        this.context = context;
-    }
+        super(managed, InjectService.class);
 
-    private void injectService(final Field field) {
-        InjectService annotation = field.getAnnotation(InjectService.class);
-        if (annotation == null) {
-            throw new IllegalArgumentException("Given field " + field.getName()
-                    + " is not annotated with " + InjectService.class.getName());
+        this.callback = callback;
+        this.context = context;
+
+        List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), InjectService.class);
+        for (Field field : fields) {
+            fieldInjections.put(field, false);
         }
 
+        this.serviceConnections.clear();
+
+        for (Field field : fieldInjections.keySet()) {
+            fieldInjections.put(field, false);
+        }
+
+    }
+
+    private void assign(Field field, Object service) {
+        Object binder = service;
+
+        if (!field.getType().isAssignableFrom(binder.getClass())) {
+            try {
+                Class<?>[] classes = field.getType().getClasses();
+                binder = classes[0].getDeclaredMethod("asInterface", IBinder.class).invoke(null, service);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to inject service", e);
+            }
+        }
+
+        if (field.getType().isAssignableFrom(binder.getClass())) {
+            Log.v("ServiceInjector", "Field is assignable");
+
+            try {
+                field.setAccessible(true);
+                field.set(managed, binder);
+                fieldInjections.put(field, true);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to inject service", e);
+            }
+
+            for (Boolean injected : fieldInjections.values()) {
+                if (!Boolean.TRUE.equals(injected)) {
+                    return;
+                }
+            }
+
+            done();
+        }
+    }
+
+    private void invokeServicesConnectedLifeCycle() {
+        if (callback != null)
+            callback.onServicesConnected();
+    }
+
+
+    private void done() {
+        invokeServicesConnectedLifeCycle();
+    }
+
+    @Override
+    protected void injectValue(final Field field, InjectService annotation) {
         // Try to inject a non-android service first...
-        {
-            Class<?> clazz = annotation.clazz();
-            if (Object.class.equals(clazz)) {
-                // Clazz annotation parameter not set.
-                // Use the type of the field.
+        Class<?> clazz = annotation.clazz();
+        if (Object.class.equals(clazz)) {
+            // Clazz annotation parameter not set.
+            // Use the type of the field.
 
-                clazz = field.getType();
-            }
+            clazz = field.getType();
+        }
 
-            Object service = ServiceRegistry.getService(clazz);
-            if (service != null) {
-                assign(field, service);
-                return;
-            }
+        Object service = ServiceRegistry.getService(clazz);
+        if (service != null) {
+            assign(field, service);
+            return;
         }
 
         String action = annotation.intentAction();
@@ -118,73 +166,5 @@ public class ServiceInjector implements Injector {
         };
         serviceConnections.add(serviceConnection);
         context.getApplicationContext().bindService(intent, serviceConnection, Service.BIND_AUTO_CREATE);
-    }
-
-    private void assign(Field field, Object service) {
-        Object binder = service;
-
-        if (!field.getType().isAssignableFrom(binder.getClass())) {
-            try {
-                Class<?>[] classes = field.getType().getClasses();
-                binder = classes[0].getDeclaredMethod("asInterface", IBinder.class).invoke(null, service);
-            } catch (Exception e) {
-                throw new RuntimeException("Unable to inject service", e);
-            }
-        }
-
-        if (field.getType().isAssignableFrom(binder.getClass())) {
-            Log.v("ServiceInjector", "Field is assignable");
-
-            try {
-                field.setAccessible(true);
-                field.set(managed, binder);
-                fieldInjections.put(field, true);
-            } catch (Exception e) {
-                // TODO: better error message
-                throw new RuntimeException("Unable to inject service", e);
-            }
-
-            for (Boolean injected : fieldInjections.values()) {
-                if (!Boolean.TRUE.equals(injected)) {
-                    return;
-                }
-            }
-
-            done();
-        }
-    }
-
-    private void invokeServicesConnectedLifeCycle() {
-        if (callback != null)
-            callback.onServicesConnected();
-    }
-
-
-    private void done() {
-        invokeServicesConnectedLifeCycle();
-    }
-
-    @Override
-    public void inject() {
-        List<Field> fields = ReflectionUtil.getAnnotatedFields(managed.getClass(), InjectService.class);
-        for (Field field : fields) {
-            fieldInjections.put(field, false);
-        }
-
-        this.serviceConnections.clear();
-
-        if (fieldInjections.isEmpty()) {
-            // Nothing to inject. Proceed.
-            done();
-            return;
-        }
-
-        for (Field field : fieldInjections.keySet()) {
-            fieldInjections.put(field, false);
-        }
-
-        for (Field field : fieldInjections.keySet()) {
-            injectService(field);
-        }
     }
 }

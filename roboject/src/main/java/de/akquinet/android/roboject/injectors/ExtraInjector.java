@@ -23,30 +23,23 @@ package de.akquinet.android.roboject.injectors;
 import android.os.Bundle;
 import android.os.Parcelable;
 import de.akquinet.android.roboject.annotations.InjectExtra;
-import de.akquinet.android.roboject.util.ReflectionUtil;
 
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class ExtraInjector implements Injector {
+public class ExtraInjector extends FieldInjector<InjectExtra> {
     private final Bundle extras;
-    private final Object managed;
 
     public ExtraInjector(Object managed, Bundle extras) {
+        super(managed, InjectExtra.class);
+
         this.extras = extras;
-        this.managed = managed;
     }
 
-    /**
-     * Inject an extra to the given field, using the value of the given
-     * annotation as extra id. If the annotation has no value, then use the
-     * field name as extra id.
-     */
-    private void injectExtra(Field field, InjectExtra annotation) {
+    @Override
+    protected void injectValue(Field field, InjectExtra annotation) {
         String value = annotation.value();
 
         if (InjectExtra.DEFAULT_VALUE.equals(value)) {
@@ -121,10 +114,7 @@ public class ExtraInjector implements Injector {
             }
 
             if (extra == null) {
-                String message = "Could not inject a suitable extra"
-                        + " for field " + field.getName() + "of instance of type "
-                        + field.getDeclaringClass().getCanonicalName() + "."
-                        + " No such extra could be found.";
+                String message = "Could not inject a suitable extra for field " + field.getName() + "of instance of type " + field.getDeclaringClass().getCanonicalName() + ". No such extra could be found.";
                 if (annotation.mandatory()) {
                     throw new RuntimeException(message);
                 } else {
@@ -136,22 +126,7 @@ public class ExtraInjector implements Injector {
             field.setAccessible(true);
             field.set(managed, extra);
         } catch (Exception e) {
-            throw new RuntimeException("Could not inject a suitable extra"
-                    + " for field " + field.getName() + "of instance of type "
-                    + field.getDeclaringClass().getCanonicalName(), e);
-        }
-    }
-
-    @Override
-    public void inject() {
-        List<Field> fields = ReflectionUtil.getFields(managed.getClass());
-        for (Field field : fields) {
-            Annotation[] annotations = field.getAnnotations();
-            for (Annotation annotation : annotations) {
-                if (annotation instanceof InjectExtra) {
-                    injectExtra(field, (InjectExtra) annotation);
-                }
-            }
+            throw new RuntimeException("Could not inject a suitable extra for field " + field.getName() + "of instance of type " + field.getDeclaringClass().getCanonicalName(), e);
         }
     }
 }
