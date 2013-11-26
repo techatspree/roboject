@@ -22,9 +22,7 @@ public class RobojectAdderActivity extends RobojectActivity {
     private TestService.AdderService adderService;
 
     @Override
-    public void onReady() {
-        super.onReady();
-
+    public void onServicesConnected() {
         addNumbersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

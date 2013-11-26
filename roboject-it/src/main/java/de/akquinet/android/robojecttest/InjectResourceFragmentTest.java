@@ -35,7 +35,7 @@ public class InjectResourceFragmentTest extends AndroidTestCase {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
             return;
 
-        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+        DummyFragmentActivity dummyFragmentActivity = perform().startActivity(DummyFragmentActivity.class);
 
         InjectResourceTestFragment fragment = (InjectResourceTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.resourceFragment);
 
@@ -54,7 +54,7 @@ public class InjectResourceFragmentTest extends AndroidTestCase {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
             return;
 
-        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+        DummyFragmentActivity dummyFragmentActivity = perform().startActivity(DummyFragmentActivity.class);
 
         InjectResourceTestFragment fragment = (InjectResourceTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.resourceFragment);
 

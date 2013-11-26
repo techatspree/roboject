@@ -20,7 +20,6 @@ limitations under the License.
 */
 package de.akquinet.android.roboject.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -101,8 +100,8 @@ public class AndroidUtil {
         throw new RuntimeException("No suitable type found for " + field.getName() + "of class " + type.getName());
     }
 
-    public static Object getResource(Activity activity, Field field, int value) {
-        Resources resources = activity.getResources();
+    public static Object getResource(Context context, Field field, int value) {
+        Resources resources = context.getResources();
         Class type = field.getType();
 
         if (type.isAssignableFrom(Boolean.TYPE) || type.isAssignableFrom(Boolean.class))
@@ -118,7 +117,7 @@ public class AndroidUtil {
         else if (type.isAssignableFrom(Drawable.class))
             return resources.getDrawable(value);
         else if (type.isAssignableFrom(Animation.class))
-            return AnimationUtils.loadAnimation(activity, value);
+            return AnimationUtils.loadAnimation(context, value);
         else if (type.isAssignableFrom(Movie.class))
             return resources.getMovie(value);
         else if (type.isAssignableFrom(String.class))

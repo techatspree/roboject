@@ -20,9 +20,7 @@ limitations under the License.
 */
 package de.akquinet.android.roboject;
 
-public interface RobojectLifecycle
+public interface ServicesConnector
 {
     void onServicesConnected();
-
-    void onReady();
 }

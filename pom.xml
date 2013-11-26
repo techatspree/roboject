@@ -37,6 +37,10 @@ limitations under the License.
     <description>An injection framework for Android</description>
     <inceptionYear>2010</inceptionYear>
 
+    <properties>
+        <ats.project.name.in.repo>stand</ats.project.name.in.repo>
+    </properties>
+
     <organization>
         <name>akquinet tech@spree Gmbh</name>
         <url>http://www.akquinet.de/en</url>

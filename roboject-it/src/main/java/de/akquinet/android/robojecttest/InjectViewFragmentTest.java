@@ -35,7 +35,7 @@ public class InjectViewFragmentTest extends AndroidTestCase {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
             return;
 
-        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+        DummyFragmentActivity dummyFragmentActivity = perform().startActivity(DummyFragmentActivity.class);
 
         InjectViewTestFragment fragment = (InjectViewTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.viewFragment);
 
@@ -49,7 +49,7 @@ public class InjectViewFragmentTest extends AndroidTestCase {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
             return;
 
-        DummyFragmentActivity dummyFragmentActivity = startActivity(DummyFragmentActivity.class);
+        DummyFragmentActivity dummyFragmentActivity = perform().startActivity(DummyFragmentActivity.class);
 
         InjectViewTestFragment fragment = (InjectViewTestFragment) dummyFragmentActivity.getFragmentManager().findFragmentById(R.id.viewFragment);
 
