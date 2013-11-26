@@ -24,7 +24,7 @@ limitations under the License.
 
     <groupId>de.akquinet.android.roboject</groupId>
     <artifactId>roboject-project</artifactId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.2.2</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -157,7 +157,7 @@ limitations under the License.
         <connection>scm:git:git@github.com:akquinet/roboject.git</connection>
         <url>git@github.com:akquinet/roboject.git</url>
         <developerConnection>scm:git:git@github.com:akquinet/roboject.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>roboject-project-1.2.2</tag>
   </scm>
 
     <profiles>

@@ -20,22 +20,20 @@ limitations under the License.
 */
 package de.akquinet.android.robojecttest;
 
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import de.akquinet.android.marvin.ActivityTestCase;
+import de.akquinet.android.marvin.AndroidTestCase;
+import de.akquinet.android.marvin.actions.ViewAction;
 import de.akquinet.android.robojecttest.activities.InjectLayoutTestActivity;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 
-public class InjectLayoutTest extends ActivityTestCase<InjectLayoutTestActivity> {
-    public InjectLayoutTest() {
-        super(InjectLayoutTestActivity.class);
-    }
+public class InjectLayoutTest extends AndroidTestCase {
 
     public void testInjectLayout() {
-        ViewGroup view = (ViewGroup) getActivity().getWindow().getDecorView();
-        assertThat(view.getChildAt(0), is(instanceOf(LinearLayout.class)));
+        InjectLayoutTestActivity layoutTestActivity = perform().startActivity(InjectLayoutTestActivity.class);
+
+        ViewAction linearLayout = activity(layoutTestActivity).view().withId(R.id.layoutView);
+        assertThat(linearLayout, is(notNullValue()));
     }
 }
