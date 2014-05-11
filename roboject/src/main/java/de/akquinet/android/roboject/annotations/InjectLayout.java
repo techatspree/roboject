@@ -38,5 +38,5 @@ public @interface InjectLayout {
     /**
      * The id of the layout.
      */
-    String value();
+    int value();
 }

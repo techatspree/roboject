@@ -20,9 +20,6 @@ limitations under the License.
 */
 package de.akquinet.android.roboject.util;
 
-import android.app.Activity;
-import android.app.Service;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -108,7 +105,6 @@ public class ReflectionUtil {
     }
 
     private static boolean isTopMostClass(Class<?> clazz) {
-        return clazz == null || clazz.equals(Activity.class) || clazz.equals(Service.class)
-                || clazz.equals(Object.class);
+        return clazz == null || clazz.getName().startsWith("android.") || clazz == Object.class;
     }
 }

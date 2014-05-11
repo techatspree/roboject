@@ -44,12 +44,12 @@ class ViewObject {
     @InjectView
     LinearLayout theLinearLayout;
 
-    @InjectView("theTextView")
+    @InjectView(R.id.theTextView)
     TextView theTextViewExplicitId;
 
-    @InjectView("theImageView")
+    @InjectView(R.id.theImageView)
     ImageView theImageViewExplicitId;
 
-    @InjectView("theLinearLayout")
+    @InjectView(R.id.theLinearLayout)
     LinearLayout theLinearLayoutExplicitId;
 }

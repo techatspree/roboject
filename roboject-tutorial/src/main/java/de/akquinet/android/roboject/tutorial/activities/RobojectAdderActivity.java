@@ -9,9 +9,10 @@ import de.akquinet.android.roboject.RobojectActivity;
 import de.akquinet.android.roboject.annotations.InjectLayout;
 import de.akquinet.android.roboject.annotations.InjectService;
 import de.akquinet.android.roboject.annotations.InjectView;
+import de.akquinet.android.roboject.tutorial.R;
 import de.akquinet.android.roboject.tutorial.services.TestService;
 
-@InjectLayout("adder_layout")
+@InjectLayout(R.layout.adder_layout)
 public class RobojectAdderActivity extends RobojectActivity {
 
     @InjectView private Button addNumbersButton;

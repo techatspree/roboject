@@ -1,3 +1,7 @@
+1.2.3
+-----
+    * Switched back to integers as annotation parameters (e.g. view ids). Performance improvements.
+
 1.2.1
 -----
     * Added support for configuring objects as local services

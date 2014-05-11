@@ -2,10 +2,11 @@ package de.akquinet.android.roboject.injectors;
 
 import android.content.Context;
 import android.view.View;
-import de.akquinet.android.roboject.annotations.InjectView;
-import de.akquinet.android.roboject.util.AndroidUtil;
 
 import java.lang.reflect.Field;
+
+import de.akquinet.android.roboject.annotations.InjectView;
+import de.akquinet.android.roboject.util.AndroidUtil;
 
 
 public class ViewInjector extends FieldInjector<InjectView> {
@@ -20,9 +21,10 @@ public class ViewInjector extends FieldInjector<InjectView> {
     @Override
     protected void injectValue(Field field, InjectView annotation) {
         Context context = rootView.getContext();
-        String value = annotation.value();
-        int id = (value == InjectView.DEFAULT_VALUE) ? AndroidUtil.getIdentifierFromR(context, "id", field.getName())
-                : AndroidUtil.getIdentifierFromR(context, "id", value);
+        int value = annotation.value();
+        int id = (value == InjectView.DEFAULT_VALUE)
+                ? AndroidUtil.getIdentifierFromR(context, "id", field.getName())
+                : value;
         try {
             View view = rootView.findViewById(id);
             field.setAccessible(true);
